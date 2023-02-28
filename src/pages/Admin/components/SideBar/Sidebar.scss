@@ -1,0 +1,37 @@
+.sidebar_container {
+  width: 300px;
+  height: 100vh;
+  margin: 0 0 0 -10px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  position: fixed;
+  z-index: 999;
+}
+
+.sidebar__inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__header {
+  display: flex;
+  width: 100%;
+  height: 46px;
+  margin-bottom: 20px;
+}
+
+.admin__link {
+  font-size: 24px;
+  font-weight: 700;
+  color: #6495ed;
+  line-height: 46px;
+}
+
+.sidebar__action {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}

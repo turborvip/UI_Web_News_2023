@@ -1,0 +1,9 @@
+export const SET_SLIDE_IMAGE = "set_slider_image";
+export const SET_USERNAME_LOGIN = "set_username_login";
+export const SET_PASSWORD_LOGIN = "set_password_login";
+export const SET_OTP_STATUS = "set_otp_status";
+export const SET_ID_USER = "set_id_user";
+export const SET_AUTH_USER = "set_auth_user";
+export const ADD_ACCOUNT = "add_account";
+export const EDIT_ACCOUNT = "edit_account";
+export const DELETE_ACCOUNT = "delete_account";
