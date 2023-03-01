@@ -1,3 +1,20 @@
+import * as request from "../ultis/request";
+import axios from "axios";
+import notify from "../ultis/notify";
+
+export const register = async (data) => {
+  try {
+    const res = await request.post("/auth/local/register", data);
+    return res;
+  } catch (error) {
+    const res = {
+      status: error?.response?.status,
+      message: error?.response?.data.message[0].messages[0].message,
+    };
+    return res;
+  }
+};
+
 export const dataAccount = [
   {
     id: "1",
