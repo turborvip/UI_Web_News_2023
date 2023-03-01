@@ -1,15 +1,11 @@
 import "./App.css";
-import { useStore } from "../src/store";
-import Home from "./pages/Home";
-import HeaderCommon from "./common/HeaderCommon";
-import FooterCommon from "./common/FooterCommon";
-import Navbar from "./common/Navbar/Navbar";
+// import { useStore } from "../src/store";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoute } from "./route";
 import DefaultLayout from "./Layout/DefaultLayout";
 
 function App() {
-  const [state] = useStore();
+  // const [state] = useStore();
 
   return (
     // <div className="App">
