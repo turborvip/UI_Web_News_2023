@@ -8,6 +8,12 @@ import {
   DELETE_ACCOUNT,
   EDIT_ACCOUNT,
   ADD_ACCOUNT,
+  ADD_CATEGORY,
+  EDIT_CATEGORY,
+  DELETE_CATEGORY,
+  ADD_NEWS,
+  EDIT_NEWS,
+  DELETE_NEWS,
 } from "./constants";
 
 export const setSlideImage = (payload) => ({
@@ -48,5 +54,29 @@ export const editAccount = (payload) => ({
 });
 export const deleteAccount = (payload) => ({
   type: DELETE_ACCOUNT,
+  payload,
+});
+export const addCategory = (payload) => ({
+  type: ADD_CATEGORY,
+  payload,
+});
+export const editCategory = (payload) => ({
+  type: EDIT_CATEGORY,
+  payload,
+});
+export const deleteCategory = (payload) => ({
+  type: DELETE_CATEGORY,
+  payload,
+});
+export const addNews = (payload) => ({
+  type: ADD_NEWS,
+  payload,
+});
+export const editNews = (payload) => ({
+  type: EDIT_NEWS,
+  payload,
+});
+export const deleteNews = (payload) => ({
+  type: DELETE_NEWS,
   payload,
 });

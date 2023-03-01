@@ -12,24 +12,25 @@ import {
   Input,
 } from "reactstrap";
 
-function ModalAdmin({
-  modal,
-  toggle,
-  create,
-  user,
-  deletemode,
-  setData,
-  data,
-}) {
+function ModalAdmin({ modal, toggle, create, user, deletemode, data }) {
   const [state, dispatch] = useStore();
   const { dataAccount } = state;
+  const { dataCategory } = state;
+  const { dataNews } = state;
 
   const [name, setName] = useState();
   const [password, setPassword] = useState();
   const [comfirmPassword, setComfirmPassword] = useState();
   const [email, setEmail] = useState();
+  const [nameCategory, setNameCategoty] = useState();
+  const [urlCategory, setUrlCategoy] = useState();
+  const [urlParentCategory, setUrlParentCategory] = useState();
+  const [captionNews, setCaptionNews] = useState();
+  const [imageNews, setImageNews] = useState();
+  const [descriptionNews, setDescriptionNews] = useState();
+  const [contentNews, setContentNews] = useState();
+  const [authorNews, setAuthorNews] = useState();
   const handleCreateNewAccount = () => {
-    const newListAccount = [...dataAccount];
     if (
       name &&
       password &&
@@ -37,28 +38,49 @@ function ModalAdmin({
       email &&
       password === comfirmPassword
     ) {
+      const newListAccount = [...dataAccount];
       const newAccount = { name, password, email };
       newListAccount.push(newAccount);
-      console.log("newListAccount", newListAccount);
       dispatch(actions.addAccount(newListAccount));
       toggle();
     }
   };
-  const handleUpdateAccount = () => {
-    const newAccount = {
-      name: name ? name : user.name,
-      password: password ? password : user.password,
-      email: email ? email : user.email,
-    };
-    const newData = [...data.data];
-
-    const index = newData.findIndex((item) => item.name === user.name);
-    newData[index] = newAccount;
-    setData(newData);
+  const handleCreateCategory = () => {
+    if (nameCategory && urlCategory && urlParentCategory) {
+      const newListCategory = [...dataCategory];
+      const newCategory = {
+        name: nameCategory,
+        url: urlCategory,
+        urlParent: urlParentCategory,
+      };
+      newListCategory.push(newCategory);
+      dispatch(actions.addCategory(newListCategory));
+      toggle();
+    }
+  };
+  const handleCreateNews = () => {
+    if (
+      captionNews &&
+      imageNews &&
+      descriptionNews &&
+      contentNews &&
+      authorNews
+    ) {
+      const newListNews = [...dataNews];
+      const newNews = {
+        caption: captionNews,
+        image: imageNews,
+        description: descriptionNews,
+        content: contentNews,
+        author: authorNews,
+      };
+      newListNews.push(newNews);
+      dispatch(actions.addNews(newListNews));
+      toggle();
+    }
   };
 
   const handleDeleteAccount = () => {
-    console.log("data", data);
     const newListAccount = [...dataAccount];
     const index = newListAccount.findIndex((item) => item.id === data.id);
     if (index > -1) {
@@ -67,6 +89,50 @@ function ModalAdmin({
     dispatch(actions.deleteAccount(newListAccount));
     toggle();
   };
+
+  const handleDeleteCategory = () => {
+    const newListCategory = [...dataCategory];
+    const index = newListCategory.findIndex((item) => item.name === data.name);
+    if (index > -1) {
+      newListCategory.splice(index, 1);
+    }
+    dispatch(actions.deleteCategory(newListCategory));
+    toggle();
+  };
+
+  const handleDeleteNews = () => {
+    const newListNews = [...dataNews];
+    const index = newListNews.findIndex((item) => item.id === data.id);
+    if (index > -1) {
+      newListNews.splice(index, 1);
+    }
+    dispatch(actions.deleteNews(newListNews));
+    toggle();
+  };
+
+  const handleUpdateNews = () => {
+    const newListNews = [...dataNews];
+    const index = newListNews.findIndex((item) => item.id === data.id);
+    if (index > -1) {
+      newListNews[index].caption = captionNews
+        ? captionNews
+        : newListNews[index].caption;
+      newListNews[index].image = imageNews
+        ? imageNews
+        : newListNews[index].image;
+      newListNews[index].description = descriptionNews
+        ? descriptionNews
+        : newListNews[index].description;
+      newListNews[index].content = contentNews
+        ? contentNews
+        : newListNews[index].content;
+      newListNews[index].author = authorNews
+        ? authorNews
+        : newListNews[index].author;
+      dispatch(actions.editNews(newListNews));
+      toggle();
+    }
+  };
   return (
     <Modal isOpen={modal} toggle={toggle}>
       <ModalHeader toggle={toggle}>Modal</ModalHeader>
@@ -74,7 +140,7 @@ function ModalAdmin({
         <ModalBody>Do you really want to delete?</ModalBody>
       ) : (
         <ModalBody>
-          {create ? (
+          {create === "account" ? (
             <>
               <FormGroup row>
                 <Label sm={2}>Name</Label>
@@ -127,54 +193,148 @@ function ModalAdmin({
             </>
           ) : (
             <>
-              <FormGroup row>
-                <Label sm={2}>Name</Label>
-                <Col sm={10}>
-                  <Input
-                    name="name"
-                    placeholder={"@admin01"}
-                    defaultValue={user ? user.name : ""}
-                    type="text"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label sm={2}>Url</Label>
-                <Col sm={10}>
-                  <Input
-                    name="email"
-                    placeholder={"@admin01@gmail.com"}
-                    defaultValue={user ? user.email : ""}
-                    type="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label sm={2}>UrlParent</Label>
-                <Col sm={10}>
-                  <Input
-                    name="password"
-                    placeholder={"@123456"}
-                    type="password"
-                    defaultValue={user ? user.password : ""}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Col>
-              </FormGroup>
+              {create === "category" ? (
+                <>
+                  <FormGroup row>
+                    <Label sm={2}>Name</Label>
+                    <Col sm={10}>
+                      <Input
+                        name="name"
+                        placeholder={"@admin01"}
+                        defaultValue={user ? user.name : ""}
+                        type="text"
+                        onChange={(e) => setNameCategoty(e.target.value)}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label sm={2}>Url</Label>
+                    <Col sm={10}>
+                      <Input
+                        name="email"
+                        placeholder={"@admin01@gmail.com"}
+                        defaultValue={user ? user.email : ""}
+                        type="email"
+                        onChange={(e) => setUrlCategoy(e.target.value)}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label sm={2}>UrlParent</Label>
+                    <Col sm={10}>
+                      <Input
+                        name="password"
+                        placeholder={"@123456"}
+                        type="text"
+                        defaultValue={user ? user.password : ""}
+                        onChange={(e) => setUrlParentCategory(e.target.value)}
+                      />
+                    </Col>
+                  </FormGroup>
+                </>
+              ) : (
+                <>
+                  <FormGroup row>
+                    <Label sm={2}>Caption</Label>
+                    <Col sm={10}>
+                      <Input
+                        name="name"
+                        placeholder={""}
+                        defaultValue={data ? data.caption : ""}
+                        type="text"
+                        onChange={(e) => setCaptionNews(e.target.value)}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label sm={2}>Image</Label>
+                    <Col sm={10}>
+                      <Input
+                        name=""
+                        placeholder={""}
+                        defaultValue={data ? data.image : ""}
+                        type="text"
+                        onChange={(e) => setImageNews(e.target.value)}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label sm={2}>Description</Label>
+                    <Col sm={10}>
+                      <Input
+                        name=""
+                        placeholder={""}
+                        type="textarea"
+                        defaultValue={data ? data.description : ""}
+                        onChange={(e) => setDescriptionNews(e.target.value)}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label sm={2}>Content</Label>
+                    <Col sm={10}>
+                      <Input
+                        name=""
+                        placeholder={""}
+                        type="textarea"
+                        defaultValue={data ? data.content : ""}
+                        onChange={(e) => setContentNews(e.target.value)}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label sm={2}>Author</Label>
+                    <Col sm={10}>
+                      <Input
+                        name=""
+                        placeholder={""}
+                        type="text"
+                        defaultValue={data ? data.author : ""}
+                        onChange={(e) => setAuthorNews(e.target.value)}
+                      />
+                    </Col>
+                  </FormGroup>
+                </>
+              )}
             </>
           )}
         </ModalBody>
       )}
       {deletemode ? (
         <ModalFooter>
-          <Button onClick={handleDeleteAccount}>Delete</Button>
+          {deletemode === "account" ? (
+            <Button onClick={handleDeleteAccount}>Delete</Button>
+          ) : (
+            <>
+              {deletemode === "category" ? (
+                <Button onClick={handleDeleteCategory}>Delete Category</Button>
+              ) : (
+                <Button onClick={handleDeleteNews}>Delete News</Button>
+              )}
+            </>
+          )}
+
           <Button onClick={toggle}>Cancel</Button>
         </ModalFooter>
       ) : (
         <ModalFooter>
-          <Button onClick={handleCreateNewAccount}>Create</Button>
+          {create === "account" ? (
+            <Button onClick={handleCreateNewAccount}>Create</Button>
+          ) : (
+            <>
+              {create === "category" ? (
+                <Button onClick={handleCreateCategory}>Create category</Button>
+              ) : (
+                <>
+                  {data ? (
+                    <Button onClick={handleUpdateNews}>Update news</Button>
+                  ) : (
+                    <Button onClick={handleCreateNews}>Create news</Button>
+                  )}
+                </>
+              )}
+            </>
+          )}
 
           {/* <Button onClick={handleUpdateAccount}>Update</Button> */}
 

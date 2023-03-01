@@ -24,19 +24,24 @@ export const dataCategory = [
     updateBy: "superadmin",
     url: "adndsaj",
     status: true,
-    data: [
-      {
-        id: "2",
-        name: "football",
-        description: " abckdfhs fsfha",
-        createAt: "02/01/2023",
-        createBy: "superadmin",
-        updateAt: "02/01/2023",
-        updateBy: "superadmin",
-        url: "adfsfdsfnjnfh",
-        idParent: "1",
-        status: true,
-      },
-    ],
+    idParent: null,
+  },
+];
+
+export const dataNews = [
+  {
+    id: 24,
+    caption: "ahhsssi",
+    image: "a",
+    description: null,
+    content: "aaa",
+    author: null,
+    viewHour: 0,
+    viewDaily: 0,
+    status: 1,
+    createBy: null,
+    updateBy: null,
+    created_at: "2023-02-28T14:22:10.000000Z",
+    updated_at: "2023-02-28T14:22:10.000000Z",
   },
 ];

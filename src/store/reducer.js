@@ -8,9 +8,15 @@ import {
   DELETE_ACCOUNT,
   EDIT_ACCOUNT,
   ADD_ACCOUNT,
+  ADD_CATEGORY,
+  EDIT_CATEGORY,
+  DELETE_CATEGORY,
+  ADD_NEWS,
+  EDIT_NEWS,
+  DELETE_NEWS,
 } from "./constants";
 
-import { dataAccount, dataCategory } from "../ApiService";
+import { dataAccount, dataCategory, dataNews } from "../ApiService";
 // import {  } from "../../ApiService/index.js";
 
 const initState = {
@@ -23,6 +29,7 @@ const initState = {
   auth: 3,
   dataAccount: [...dataAccount],
   dataCategory: [...dataCategory],
+  dataNews: [...dataNews],
 };
 
 function reducer(state, action) {
@@ -72,6 +79,36 @@ function reducer(state, action) {
       return {
         ...state,
         dataAccount: action.payload,
+      };
+    case ADD_CATEGORY:
+      return {
+        ...state,
+        dataCategory: action.payload,
+      };
+    case EDIT_CATEGORY:
+      return {
+        ...state,
+        dataCategory: action.payload,
+      };
+    case DELETE_CATEGORY:
+      return {
+        ...state,
+        dataCategory: action.payload,
+      };
+    case ADD_NEWS:
+      return {
+        ...state,
+        dataNews: action.payload,
+      };
+    case EDIT_NEWS:
+      return {
+        ...state,
+        dataNews: action.payload,
+      };
+    case DELETE_NEWS:
+      return {
+        ...state,
+        dataNews: action.payload,
       };
     default:
       throw new Error("Invalid actions.");

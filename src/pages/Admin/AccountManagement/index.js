@@ -1,24 +1,24 @@
 import { useState } from "react";
-import ModalAdmin from "../../Layout/AdminLayout/components/ModalAdmin";
+import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
 
 import "./AccountManagement.scss";
 import ListAccount from "./ListAccount";
 
 function AccouontManagement() {
-  const dataUser = [
-    {
-      id: 1,
-      name: "admin",
-      password: "123456789",
-      email: "admin@gmail.com",
-      createAt: "1/2/2022",
-      createBy: "admin",
-      updateAt: "1/2/2022",
-      updateBy: "admin",
-      role: "superAdmin",
-    },
-  ];
-  const [data, setData] = useState(dataUser);
+  // const dataUser = [
+  //   {
+  //     id: 1,
+  //     name: "admin",
+  //     password: "123456789",
+  //     email: "admin@gmail.com",
+  //     createAt: "1/2/2022",
+  //     createBy: "admin",
+  //     updateAt: "1/2/2022",
+  //     updateBy: "admin",
+  //     role: "superAdmin",
+  //   },
+  // ];
+  // const [data, setData] = useState(dataUser);
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -35,7 +35,7 @@ function AccouontManagement() {
           <ListAccount />
         </div>
       </div>
-      <ModalAdmin modal={modal} toggle={toggle} create />
+      <ModalAdmin modal={modal} toggle={toggle} create="account" />
     </div>
   );
 }

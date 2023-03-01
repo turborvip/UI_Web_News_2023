@@ -1,12 +1,14 @@
-.accountmanagement__container {
+.newsmanagement__container {
+  height: 100%;
+  background-color: #dde0e6;
   margin: 0;
 }
 
-.accountmanagement__inner {
+.newsmanagement__inner {
   padding: 10px;
 }
 
-.accountmanagement__header {
+.newsmanagement__header {
   margin: 0;
   width: 100%;
   height: 200px;
@@ -16,7 +18,7 @@
   // position: fixed;
 }
 
-.accountmanagement__btn--add {
+.newsmanagement__btn--add {
   position: absolute;
   top: 140px;
   right: 60px;

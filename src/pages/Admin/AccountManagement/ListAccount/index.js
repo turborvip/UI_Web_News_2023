@@ -1,28 +1,19 @@
 import { useState } from "react";
 import { Table } from "reactstrap";
-import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
-import { useStore, actions } from "../../../store";
+import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
+import { useStore, actions } from "../../../../store";
 
 import "./ListAccount.scss";
 
 function ListAccount() {
   const [state, dispatch] = useStore();
   const { dataAccount } = state;
-  const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
-  const [account, setAccount] = useState();
   const [accountDelete, setAccountDelete] = useState();
 
   const toggleDelete = (id) => {
-    console.log("id", id);
     setAccountDelete(id);
     setModalDelete(!modalDelete);
-  };
-
-  const toggle = (account) => {
-    console.log("account", account);
-    setAccount(account);
-    setModal(!modal);
   };
 
   const handleEditActive = (account) => {
@@ -64,7 +55,8 @@ function ListAccount() {
                   <td>{account.updateAt}</td>
                   <td>{account.updateBy}</td>
                   <td>{account.role}</td>
-                  <td>{account.status.toString()}</td>
+                  {/* <td>{account.status}</td> */}
+                  <td>{account?.status?.toString() ?? ""}</td>
                   <td className="listaccount__table--actions">
                     <i
                       className="fa fa-edit"
@@ -80,11 +72,10 @@ function ListAccount() {
             })}
         </tbody>
       </Table>
-      <ModalAdmin modal={modal} toggle={toggle} user={account} />
       <ModalAdmin
         modal={modalDelete}
         toggle={toggleDelete}
-        deletemode
+        deletemode="account"
         data={accountDelete}
       />
     </div>

@@ -1,28 +1,35 @@
 import { useState } from "react";
 import { Table } from "reactstrap";
-import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
+import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
+import { useStore, actions } from "../../../../store";
 
 import "./ListCategory.scss";
 
-function ListCategory(data, setData) {
-  const dataAccount = data.data;
+function ListCategory() {
+  const [state, dispatch] = useStore();
+  const { dataCategory } = state;
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
-  const [account, setAccount] = useState();
+  const [categoryDelete, setCategoryDelete] = useState();
 
-  const toggleDelete = (id) => {
-    console.log("id", id);
+  const toggleDelete = (category) => {
+    setCategoryDelete(category);
     setModalDelete(!modalDelete);
   };
 
-  const toggle = (account) => {
-    console.log("account", account);
-    setAccount(account);
+  const toggle = () => {
     setModal(!modal);
   };
 
   const handleEditActiveCategory = (category) => {
-    console.log("active category", category);
+    if (category.status || category.status.toString() === "false") {
+      const newListCategory = [...dataCategory];
+      const index = newListCategory.findIndex(
+        (item) => item.id === category.id
+      );
+      newListCategory[index].status = !newListCategory[index].status;
+      dispatch(actions.editAccount(newListCategory));
+    }
   };
   return (
     <div className="listaccount__container">
@@ -42,20 +49,20 @@ function ListCategory(data, setData) {
           </tr>
         </thead>
         <tbody>
-          {dataAccount &&
-            dataAccount.length > 0 &&
-            dataAccount.map((category) => {
+          {dataCategory &&
+            dataCategory.length > 0 &&
+            dataCategory.map((category, index) => {
               return (
-                <tr key={category.id}>
-                  <th scope="row">{category.id}</th>
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
                   <td>{category.name}</td>
-                  <td>{category.email}</td>
-                  <td>{category.email}</td>
+                  <td>{category.url}</td>
+                  <td>{category.urlParent}</td>
                   <td>{category.createAt}</td>
                   <td>{category.createBy}</td>
                   <td>{category.updateAt}</td>
                   <td>{category.updateBy}</td>
-                  <td>{category.active}</td>
+                  <td>{category?.status?.toString()}</td>
                   <td className="listaccount__table--actions">
                     <i
                       className="fa fa-edit"
@@ -63,7 +70,7 @@ function ListCategory(data, setData) {
                     />
                     <i
                       className="fa fa-trash-o"
-                      onClick={() => toggleDelete(account.id)}
+                      onClick={() => toggleDelete(category)}
                     />
                   </td>
                 </tr>
@@ -79,7 +86,12 @@ function ListCategory(data, setData) {
 
         // setData={setData}
       /> */}
-      <ModalAdmin modal={modalDelete} toggle={toggleDelete} deletemode />
+      <ModalAdmin
+        modal={modalDelete}
+        toggle={toggleDelete}
+        deletemode="category"
+        data={categoryDelete}
+      />
     </div>
   );
 }

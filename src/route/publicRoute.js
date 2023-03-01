@@ -1,8 +1,8 @@
 import AdminLayout from "../Layout/AdminLayout";
-import AccountManagement from "../pages/AccountManagement";
-import CategoryManagement from "../pages/CategoryManagement";
-import Dashboard from "../pages/Dashboard";
-import NewsManagement from "../pages/NewsManagement";
+import AccountManagement from "../pages/Admin/AccountManagement";
+import CategoryManagement from "../pages/Admin/CategoryManagement";
+import Dashboard from "../pages/Admin/Dashboard";
+import NewsManagement from "../pages/Admin/NewsManagement";
 
 export const publicRoute = [
   { path: "/admin", layout: AdminLayout, component: Dashboard },
