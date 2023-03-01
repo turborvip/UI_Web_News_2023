@@ -4,6 +4,7 @@ import AccountManagement from "../pages/Admin/AccountManagement";
 import CategoryManagement from "../pages/Admin/CategoryManagement";
 import Dashboard from "../pages/Admin/Dashboard";
 import NewsManagement from "../pages/Admin/NewsManagement";
+import Home from "../pages/User/Home";
 
 // User
 import DefaultLayout from "../Layout/DefaultLayout";
@@ -27,9 +28,5 @@ export const publicRoute = [
     layout: AdminLayout,
     component: CategoryManagement,
   },
-  {
-    path: "/home",
-    layout: DefaultLayout,
-    component: Home,
-  },
+  { path: "/", component: Home },
 ];
