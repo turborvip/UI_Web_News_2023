@@ -9,6 +9,7 @@ import NewsManagement from "../pages/Admin/NewsManagement";
 import DefaultLayout from "../Layout/DefaultLayout";
 import Home from "../pages/User/Home";
 import NewsDetail from "../pages/User/NewsDetail";
+import Category from "../pages/User/Category";
 
 
 export const publicRoute = [
@@ -30,5 +31,6 @@ export const publicRoute = [
   },
   { path: "/", component: Home },
   { path: "/news", component: NewsDetail, param:"idNews" },
+  { path: "/categories", component: Category,param:"idCategory"},
 
 ];

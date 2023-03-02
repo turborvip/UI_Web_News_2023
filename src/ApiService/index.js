@@ -5,10 +5,10 @@ import notify from "../ultis/notify";
 // Common categories
 export const getCategories = async () => {
   try {
-    const res = await request.get("/api/categories");
+    const res = await request.get("/api/categories/findAll");
     return res;
   } catch (error) {
-    notify('error',error?.message)
+    notify("error", error?.message);
   }
 };
 
@@ -18,7 +18,7 @@ export const getDataHome = async () => {
     const res = await request.get("api/news/inHome");
     return res;
   } catch (error) {
-    notify('error',error?.message)
+    notify("error", error?.message);
   }
 };
 
@@ -27,7 +27,7 @@ export const getNewsInfinitive = async (page) => {
     const res = await request.get(`api/news?page=${page}`);
     return res;
   } catch (error) {
-    notify('error',error?.message)
+    notify("error", error?.message);
   }
 };
 
@@ -35,10 +35,20 @@ export const getNewsInfinitive = async (page) => {
 
 export const getNewsDetail = async (id) => {
   try {
-    const res = await request.post(`api/news/detail`,{id});
+    const res = await request.post(`api/news/detail`, { id });
     return res;
   } catch (error) {
-    notify('error',error?.message)
+    notify("error", error?.message);
+  }
+};
+
+// List new flow categories
+export const getNewsFlowCategoriesId = async (idCategory, page, filter,caption,author) => {
+  try {
+    const res = await request.get(`api/news/findNewsByCategory/${idCategory}?page=${page||1}&filter=${filter||''}&caption=${caption||''}&author=${author||''}`)
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
   }
 };
 
