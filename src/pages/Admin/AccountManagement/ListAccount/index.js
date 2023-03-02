@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Table } from "reactstrap";
 import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
+import ModalUpdateAccount from "../../../../Layout/AdminLayout/components/ModalUpdateAccount";
 import { useStore, actions } from "../../../../store";
 
 import "./ListAccount.scss";
@@ -10,6 +11,12 @@ function ListAccount() {
   const { dataAccount } = state;
   const [modalDelete, setModalDelete] = useState(false);
   const [accountDelete, setAccountDelete] = useState();
+  const [accountUpdate, setAccountUpdate] = useState();
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => {
+    setModal(!modal);
+  };
 
   const toggleDelete = (id) => {
     setAccountDelete(id);
@@ -17,12 +24,8 @@ function ListAccount() {
   };
 
   const handleEditActive = (account) => {
-    if (account.status || account.status.toString() === "false") {
-      const newListAccount = [...dataAccount];
-      const index = newListAccount.findIndex((item) => item.id === account.id);
-      newListAccount[index].status = !newListAccount[index].status;
-      dispatch(actions.editAccount(newListAccount));
-    }
+    setAccountUpdate(account);
+    toggle();
   };
   return (
     <div className="listaccount__container">
@@ -78,6 +81,7 @@ function ListAccount() {
         deletemode="account"
         data={accountDelete}
       />
+      <ModalUpdateAccount modal={modal} toggle={toggle} fetch={fetch} />
     </div>
   );
 }

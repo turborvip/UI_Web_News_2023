@@ -100,9 +100,11 @@ export const deleteNews = async (id) => {
     notify("error", error?.message);
   }
 };
-export const getAllNews = async () => {
+export const getAllNews = async (page, pageSize) => {
   try {
-    const res = await request.get(`api/news`);
+    const res = await request.get(
+      `api/news?page=${page || ""}&pageSize=${pageSize || ""}`
+    );
     return res;
   } catch (error) {
     notify("error", error?.message);

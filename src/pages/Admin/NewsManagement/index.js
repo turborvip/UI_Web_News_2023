@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllNews } from "../../../ApiService";
+import Pagination from "../../../component/Pagination/Pagination";
 import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
 import ListNews from "./ListNews";
 import "./NewsManagement.scss";
@@ -7,15 +8,19 @@ import "./NewsManagement.scss";
 function NewsManagement() {
   const [modal, setModal] = useState(false);
   const [dataNews, setDataNews] = useState();
+  const [page, setPage] = useState();
+  const [totalPage, setTotalPage] = useState();
 
   const toggle = () => setModal(!modal);
 
   useEffect(() => {
     fetch();
   }, []);
-  const fetch = () => {
-    getAllNews().then((res) => {
+  const fetch = (id, page, filter, pageSize) => {
+    getAllNews(page, pageSize).then((res) => {
       console.log(res.data);
+      setPage(res?.page);
+      setTotalPage(res?.totalPage);
       setDataNews(res?.data);
     });
   };
@@ -30,6 +35,9 @@ function NewsManagement() {
             Create new news
           </button>
           <ListNews dataNews={dataNews} fetch={fetch} />
+          <div className="newsmanagement__pagination">
+            <Pagination page={page || 1} totalPage={totalPage} fetch={fetch} />
+          </div>
         </div>
       </div>
       <ModalAdmin modal={modal} toggle={toggle} create fetch={fetch} />
