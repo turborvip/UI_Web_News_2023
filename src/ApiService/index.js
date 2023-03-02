@@ -8,7 +8,7 @@ export const getCategories = async () => {
     const res = await request.get("/api/categories");
     return res;
   } catch (error) {
-    notify('error',error?.message)
+    notify("error", error?.message);
   }
 };
 
@@ -18,7 +18,7 @@ export const getDataHome = async () => {
     const res = await request.get("api/news/inHome");
     return res;
   } catch (error) {
-    notify('error',error?.message)
+    notify("error", error?.message);
   }
 };
 
@@ -27,7 +27,7 @@ export const getNewsInfinitive = async (page) => {
     const res = await request.get(`api/news?page=${page}`);
     return res;
   } catch (error) {
-    notify('error',error?.message)
+    notify("error", error?.message);
   }
 };
 
@@ -35,10 +35,66 @@ export const getNewsInfinitive = async (page) => {
 
 export const getNewsDetail = async (id) => {
   try {
-    const res = await request.post(`api/news/detail`,{id});
+    const res = await request.post(`api/news/detail`, { id });
     return res;
   } catch (error) {
-    notify('error',error?.message)
+    notify("error", error?.message);
+  }
+};
+//admin
+//create category
+export const createNewCategory = async (newCategory) => {
+  try {
+    await request.post(`api/categories/create`, newCategory);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+export const deleteCategory = async (id) => {
+  try {
+    await request.post(`api/categories/delete`, id);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+export const updateCategory = async (category) => {
+  try {
+    await request.post(`api/categories/update`, category);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+//news
+export const createNews = async (news) => {
+  try {
+    await request.post(`api/news/create`, news);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+export const updateNews = async (news) => {
+  try {
+    await request.post(`api/news/update`, news);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+export const deleteNews = async (id) => {
+  try {
+    await request.post(`api/news/delete`, { id });
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+export const getAllNews = async () => {
+  try {
+    const res = await request.get(`api/news`);
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
   }
 };
 

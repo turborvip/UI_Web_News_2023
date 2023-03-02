@@ -10,6 +10,15 @@
   display: flex;
 
   background-color: #dde0e6;
+  a,
+  link {
+    color: black;
+    text-decoration: none;
+    &:hover {
+      color: #00bfff;
+      background-color: #e6e6fa;
+    }
+  }
 }
 
 .admin__content {
@@ -22,13 +31,4 @@
   margin-left: 290px;
 }
 
-// đặt tên class hoặc bọc cả cái css trong 1 cái class ko cái thẻ a này nó ăn toàn bộ cả cái user của tôi nhé bạn ơi 
-// a,
-// link {
-//   color: black;
-//   text-decoration: none;
-//   &:hover {
-//     color: #00bfff;
-//     background-color: #e6e6fa;
-//   }
-// }
+// đặt tên class hoặc bọc cả cái css trong 1 cái class ko cái thẻ a này nó ăn toàn bộ cả cái user của tôi nhé bạn ơi

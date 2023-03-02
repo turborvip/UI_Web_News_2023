@@ -1,13 +1,12 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: "http://127.0.0.1/",
+  baseURL: "http://192.168.83.97/",
 
   headers: {
     "Content-Type": "application/json",
   },
 });
-
 
 export const get = async (pathApi, options = {}) => {
   const res = await request.get(pathApi, options);
@@ -24,4 +23,4 @@ export const put = async (pathApi, options) => {
   return res.data;
 };
 
-export default request ;
+export default request;

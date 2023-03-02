@@ -17,7 +17,6 @@ import {
 } from "./constants";
 
 import { dataAccount, dataCategory, dataNews } from "../ApiService";
-// import {  } from "../../ApiService/index.js";
 
 const initState = {
   username: "",
@@ -30,6 +29,7 @@ const initState = {
   dataAccount: [...dataAccount],
   dataCategory: [...dataCategory],
   dataNews: [...dataNews],
+  isCreate: false,
 };
 
 function reducer(state, action) {
