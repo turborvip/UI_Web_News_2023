@@ -11,7 +11,7 @@ function MenuTree({ data }) {
         data.map(item => (
           <div key={item.data.id}>
             <div>
-              <Link to={'/news/findNewsByCategory/' + item.data.id} className={styles.nameCategory}>
+              <Link to={'../categories/' + item.data.id} className={styles.nameCategory}>
                 {item.data.title}
               </Link>
               <MenuChildrent data={item.children} />

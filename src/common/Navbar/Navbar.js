@@ -40,7 +40,7 @@ function Navbar() {
           (item) =>
             item.parent_id === null && (
               <li className={styles.navItem} key={item.id}>
-                <Link to={"/news/findNewsByCategory/" + item.id} className={styles.span}>
+                <Link to={"../categories/" + item.id} className={styles.span}>
                   {item.title}
                 </Link>
               </li>
