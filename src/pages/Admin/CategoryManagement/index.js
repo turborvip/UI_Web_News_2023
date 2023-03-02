@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../../../ApiService";
+import { getCategoryInAdmin } from "../../../ApiService";
+import Pagination from "../../../component/Pagination/Pagination";
 import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
 // import ModalAdmin from "../../Layout/AdminLayout/components/ModalAdmin";
 
@@ -9,13 +10,17 @@ import ListCategory from "./ListCategory";
 function CategoryManagement() {
   const [dataCategory, setDataCategory] = useState();
   const [modal, setModal] = useState(false);
+  const [page, setPage] = useState();
+  const [totalPage, setTotalPage] = useState();
 
   useEffect(() => {
     fetch();
   }, []);
-  const fetch = () => {
-    getCategories().then((res) => {
+  const fetch = (id, page, filter, pageSize) => {
+    getCategoryInAdmin(page, pageSize).then((res) => {
       console.log(res);
+      setPage(res?.page);
+      setTotalPage(res?.totalPage);
       setDataCategory(res?.data);
     });
   };
@@ -32,6 +37,9 @@ function CategoryManagement() {
             Create new category
           </button>
           <ListCategory dataCategory={dataCategory} fetch={fetch} />
+          <div className="category__pagination">
+            <Pagination page={page || 1} totalPage={totalPage} fetch={fetch} />
+          </div>
         </div>
       </div>
       <ModalAdmin

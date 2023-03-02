@@ -66,6 +66,17 @@ export const updateCategory = async (category) => {
   }
 };
 
+export const getCategoryInAdmin = async (page, pageSize) => {
+  try {
+    const res = await request.get(
+      `/api/categories?page=${page || ""}&pageSize=${pageSize || ""}`
+    );
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
 //news
 export const createNews = async (news) => {
   try {
