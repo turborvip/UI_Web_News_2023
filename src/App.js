@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoute } from "./route";
 import DefaultLayout from "./Layout/DefaultLayout";
+import { Fragment } from "react";
 
 function App() {
   // const [state] = useStore();
@@ -24,9 +25,15 @@ function App() {
       <div className="App">
         <Routes>
           {publicRoute.map((route, index) => {
+            // Page ở đây coi như một component
             const Page = route.component;
-            let Layout = route.layout ? route.layout : DefaultLayout;
-
+            const param = route?.param || null;
+            let Layout = DefaultLayout;
+            if (route.layout === null) {
+              Layout = route.layout;
+            } else if (route.layout) {
+              Layout = Fragment;
+            }
             return (
               <Route
                 key={index}
@@ -36,7 +43,18 @@ function App() {
                     <Page />
                   </Layout>
                 }
-              />
+              >
+                {param && (
+                  <Route
+                    path={`:${param}`}
+                    element={
+                      <Layout>
+                        <Page />
+                      </Layout>
+                    }
+                  />
+                )}
+              </Route>
             );
           })}
         </Routes>

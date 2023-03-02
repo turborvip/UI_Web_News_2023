@@ -2,16 +2,43 @@ import * as request from "../ultis/request";
 import axios from "axios";
 import notify from "../ultis/notify";
 
-export const register = async (data) => {
+// Common categories
+export const getCategories = async () => {
   try {
-    const res = await request.post("/auth/local/register", data);
+    const res = await request.get("/api/categories");
     return res;
   } catch (error) {
-    const res = {
-      status: error?.response?.status,
-      message: error?.response?.data.message[0].messages[0].message,
-    };
+    notify('error',error?.message)
+  }
+};
+
+// Home page
+export const getDataHome = async () => {
+  try {
+    const res = await request.get("api/news/inHome");
     return res;
+  } catch (error) {
+    notify('error',error?.message)
+  }
+};
+
+export const getNewsInfinitive = async (page) => {
+  try {
+    const res = await request.get(`api/news?page=${page}`);
+    return res;
+  } catch (error) {
+    notify('error',error?.message)
+  }
+};
+
+// News Detail
+
+export const getNewsDetail = async (id) => {
+  try {
+    const res = await request.post(`api/news/detail`,{id});
+    return res;
+  } catch (error) {
+    notify('error',error?.message)
   }
 };
 

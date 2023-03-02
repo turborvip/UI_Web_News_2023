@@ -10,16 +10,9 @@ function NewsDetail() {
   const [state] = useStore();
   return (
     <div className="App">
-      {state.auth ? (
         <>
-          <HeaderCommon />
-          <Navbar />
           <NewsDetailContent />
-          <FooterCommon />
         </>
-      ) : (
-        <Forbidden />
-      )}
     </div>
   );
 }

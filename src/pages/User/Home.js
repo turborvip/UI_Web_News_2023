@@ -1,12 +1,12 @@
 import React from "react";
-
+import { Container } from "reactstrap";
 import ContentHome from "../../component/ContentHome/ContentHome";
 
 function Home() {
   return (
-    <div>
+    <Container className="bg-light border" fluid="md">
       <ContentHome />
-    </div>
+    </Container>
   );
 }
 export default Home;

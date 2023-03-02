@@ -8,8 +8,8 @@ function MenuChildrent({ data }) {
             {
                 data.map(item => (
                     <div key={item.data.id}>
-                        <Link to={'/category/' + item.data.id} className={styles.nameCategory}>
-                            {item.data.name}
+                        <Link to={'/news/findNewsByCategory/' + item.data.id} className={styles.nameCategory}>
+                            {item.data.title}
                         </Link>
                         {item.children.length === 0 ? '' : <MenuChildrent data={item.children} />}
                     </div>

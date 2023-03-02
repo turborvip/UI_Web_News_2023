@@ -4,11 +4,11 @@ import AccountManagement from "../pages/Admin/AccountManagement";
 import CategoryManagement from "../pages/Admin/CategoryManagement";
 import Dashboard from "../pages/Admin/Dashboard";
 import NewsManagement from "../pages/Admin/NewsManagement";
-import Home from "../pages/User/Home";
 
 // User
 import DefaultLayout from "../Layout/DefaultLayout";
-import Home from "../pages/Home";
+import Home from "../pages/User/Home";
+import NewsDetail from "../pages/User/NewsDetail";
 
 
 export const publicRoute = [
@@ -29,4 +29,6 @@ export const publicRoute = [
     component: CategoryManagement,
   },
   { path: "/", component: Home },
+  { path: "/news", component: NewsDetail, param:"idNews" },
+
 ];
