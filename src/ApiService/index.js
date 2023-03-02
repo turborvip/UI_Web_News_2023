@@ -41,11 +41,77 @@ export const getNewsDetail = async (id) => {
     notify("error", error?.message);
   }
 };
+//admin
+//create category
+export const createNewCategory = async (newCategory) => {
+  try {
+    await request.post(`api/categories/create`, newCategory);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+export const deleteCategory = async (id) => {
+  try {
+    await request.post(`api/categories/delete`, id);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+export const updateCategory = async (category) => {
+  try {
+    await request.post(`api/categories/update`, category);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+//news
+export const createNews = async (news) => {
+  try {
+    await request.post(`api/news/create`, news);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+export const updateNews = async (news) => {
+  try {
+    await request.post(`api/news/update`, news);
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+export const deleteNews = async (id) => {
+  try {
+    await request.post(`api/news/delete`, { id });
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+export const getAllNews = async () => {
+  try {
+    const res = await request.get(`api/news`);
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
 
 // List new flow categories
-export const getNewsFlowCategoriesId = async (idCategory, page, filter,caption,author) => {
+export const getNewsFlowCategoriesId = async (
+  idCategory,
+  page,
+  filter,
+  caption,
+  author
+) => {
   try {
-    const res = await request.get(`api/news/findNewsByCategory/${idCategory}?page=${page||1}&filter=${filter||''}&caption=${caption||''}&author=${author||''}`)
+    const res = await request.get(
+      `api/news/findNewsByCategory/${idCategory}?page=${page || 1}&filter=${
+        filter || ""
+      }&caption=${caption || ""}&author=${author || ""}`
+    );
     return res;
   } catch (error) {
     notify("error", error?.message);

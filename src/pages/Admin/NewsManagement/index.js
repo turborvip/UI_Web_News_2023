@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAllNews } from "../../../ApiService";
 import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
 import ListNews from "./ListNews";
 import "./NewsManagement.scss";
 
 function NewsManagement() {
   const [modal, setModal] = useState(false);
+  const [dataNews, setDataNews] = useState();
 
   const toggle = () => setModal(!modal);
+
+  useEffect(() => {
+    fetch();
+  }, []);
+  const fetch = () => {
+    getAllNews().then((res) => {
+      console.log(res.data);
+      setDataNews(res?.data);
+    });
+  };
   return (
     <div className="newsmanagement__container">
       <div className="newsmanagement__inner">
@@ -17,10 +29,10 @@ function NewsManagement() {
           <button className="newsmanagement__btn--add" onClick={toggle}>
             Create new news
           </button>
-          <ListNews />
+          <ListNews dataNews={dataNews} fetch={fetch} />
         </div>
       </div>
-      <ModalAdmin modal={modal} toggle={toggle} create />
+      <ModalAdmin modal={modal} toggle={toggle} create fetch={fetch} />
     </div>
   );
 }

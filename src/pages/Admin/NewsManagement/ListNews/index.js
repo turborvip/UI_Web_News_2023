@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useStore } from "../../../../store";
+// import { useStore } from "../../../../store";
 import "./ListNews.scss";
 import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
 
-function ListNews() {
-  const [state] = useStore();
-  const { dataNews } = state;
+function ListNews({ dataNews, fetch }) {
+  // const [state] = useStore();
+  // const { dataNews } = state;
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [newsDelete, setNewsDelete] = useState();
@@ -41,11 +41,11 @@ function ListNews() {
                     </div>
                     <div className="listnews__news--createby">
                       <span>Create By: {news.createBy}</span>
-                      <span>Create At: {news.createAt}</span>
+                      <span>Create At: {news.created_at}</span>
                     </div>
                     <div className="listnews__news--update">
                       <span>Update By: {news.updateBy}</span>
-                      <span>Update At: {news.updateAt}</span>
+                      <span>Update At: {news.updated_at}</span>
                     </div>
                   </>
                 </div>
@@ -73,6 +73,7 @@ function ListNews() {
       <ModalAdmin
         modal={modalDelete}
         toggle={toggleDeleteNews}
+        fetch={fetch}
         deletemode
         data={newsDelete}
       />

@@ -11,20 +11,29 @@ import {
   Col,
   Input,
 } from "reactstrap";
+import {
+  createNewCategory,
+  createNews,
+  deleteCategory,
+  deleteNews,
+} from "../../../../ApiService";
 
-function ModalAdmin({ modal, toggle, create, user, deletemode, data }) {
+function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const [state, dispatch] = useStore();
   const { dataAccount } = state;
   const { dataCategory } = state;
   const { dataNews } = state;
+  const { isCreate } = state;
 
   const [name, setName] = useState();
   const [password, setPassword] = useState();
   const [comfirmPassword, setComfirmPassword] = useState();
   const [email, setEmail] = useState();
+
   const [nameCategory, setNameCategoty] = useState();
   const [urlCategory, setUrlCategoy] = useState();
   const [urlParentCategory, setUrlParentCategory] = useState();
+
   const [captionNews, setCaptionNews] = useState();
   const [imageNews, setImageNews] = useState();
   const [descriptionNews, setDescriptionNews] = useState();
@@ -38,23 +47,22 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data }) {
       email &&
       password === comfirmPassword
     ) {
-      const newListAccount = [...dataAccount];
       const newAccount = { name, password, email };
-      newListAccount.push(newAccount);
-      dispatch(actions.addAccount(newListAccount));
+
       toggle();
     }
   };
   const handleCreateCategory = () => {
-    if (nameCategory && urlCategory && urlParentCategory) {
-      const newListCategory = [...dataCategory];
+    if (nameCategory) {
       const newCategory = {
-        name: nameCategory,
+        title: nameCategory,
         url: urlCategory,
         urlParent: urlParentCategory,
       };
-      newListCategory.push(newCategory);
-      dispatch(actions.addCategory(newListCategory));
+      console.log("category", newCategory);
+      createNewCategory(newCategory).then(() => {
+        fetch();
+      });
       toggle();
     }
   };
@@ -66,16 +74,19 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data }) {
       contentNews &&
       authorNews
     ) {
-      const newListNews = [...dataNews];
       const newNews = {
         caption: captionNews,
         image: imageNews,
         description: descriptionNews,
         content: contentNews,
         author: authorNews,
+        updateBy: "asd",
+        createBy: "asda",
+        categories: ["1"],
       };
-      newListNews.push(newNews);
-      dispatch(actions.addNews(newListNews));
+      createNews(newNews).then(() => {
+        fetch();
+      });
       toggle();
     }
   };
@@ -91,47 +102,24 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data }) {
   };
 
   const handleDeleteCategory = () => {
-    const newListCategory = [...dataCategory];
-    const index = newListCategory.findIndex((item) => item.name === data.name);
-    if (index > -1) {
-      newListCategory.splice(index, 1);
-    }
-    dispatch(actions.deleteCategory(newListCategory));
+    const id = { id: data.id };
+    deleteCategory(id).then(() => {
+      fetch();
+    });
+
     toggle();
   };
 
   const handleDeleteNews = () => {
-    const newListNews = [...dataNews];
-    const index = newListNews.findIndex((item) => item.id === data.id);
-    if (index > -1) {
-      newListNews.splice(index, 1);
-    }
-    dispatch(actions.deleteNews(newListNews));
+    deleteNews(data.id).then(() => {
+      fetch();
+    });
     toggle();
   };
 
   const handleUpdateNews = () => {
-    const newListNews = [...dataNews];
-    const index = newListNews.findIndex((item) => item.id === data.id);
-    if (index > -1) {
-      newListNews[index].caption = captionNews
-        ? captionNews
-        : newListNews[index].caption;
-      newListNews[index].image = imageNews
-        ? imageNews
-        : newListNews[index].image;
-      newListNews[index].description = descriptionNews
-        ? descriptionNews
-        : newListNews[index].description;
-      newListNews[index].content = contentNews
-        ? contentNews
-        : newListNews[index].content;
-      newListNews[index].author = authorNews
-        ? authorNews
-        : newListNews[index].author;
-      dispatch(actions.editNews(newListNews));
-      toggle();
-    }
+    const updateNews = {};
+    toggle();
   };
   return (
     <Modal isOpen={modal} toggle={toggle}>

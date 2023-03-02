@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCategories } from "../../../ApiService";
 import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
 // import ModalAdmin from "../../Layout/AdminLayout/components/ModalAdmin";
 
@@ -6,20 +7,18 @@ import "./CategoryManagement.scss";
 import ListCategory from "./ListCategory";
 
 function CategoryManagement() {
-  // const dataUser = [
-  //   {
-  //     id: 1,
-  //     name: "admin",
-  //     password: "123456789",
-  //     email: "admin@gmail.com",
-  //     createAt: "1/2/2022",
-  //     createBy: "admin",
-  //     updateAt: "1/2/2022",
-  //     updateBy: "admin",
-  //   },
-  // ];
-  // const [data, setData] = useState(dataUser);
+  const [dataCategory, setDataCategory] = useState();
   const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    fetch();
+  }, []);
+  const fetch = () => {
+    getCategories().then((res) => {
+      console.log(res);
+      setDataCategory(res?.data);
+    });
+  };
 
   const toggle = () => setModal(!modal);
   return (
@@ -32,10 +31,15 @@ function CategoryManagement() {
           <button className="categorymanagement__btn--add" onClick={toggle}>
             Create new category
           </button>
-          <ListCategory />
+          <ListCategory dataCategory={dataCategory} fetch={fetch} />
         </div>
       </div>
-      <ModalAdmin modal={modal} toggle={toggle} create="category" />
+      <ModalAdmin
+        modal={modal}
+        toggle={toggle}
+        create="category"
+        fetch={fetch}
+      />
     </div>
   );
 }

@@ -30,9 +30,9 @@ function App() {
             const param = route?.param || null;
             let Layout = DefaultLayout;
             if (route.layout === null) {
-              Layout = route.layout;
-            } else if (route.layout) {
               Layout = Fragment;
+            } else if (route.layout) {
+              Layout = route.layout;
             }
             return (
               <Route
