@@ -13,8 +13,8 @@ export const get = async (pathApi, options = {}) => {
   return res.data;
 };
 
-export const post = async (pathApi, options) => {
-  const res = await request.post(pathApi, options);
+export const post = async (pathApi, payload, options) => {
+  const res = await request.post(pathApi, payload, options);
   return res.data;
 };
 

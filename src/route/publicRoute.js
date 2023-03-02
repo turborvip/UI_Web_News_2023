@@ -4,6 +4,8 @@ import AccountManagement from "../pages/Admin/AccountManagement";
 import CategoryManagement from "../pages/Admin/CategoryManagement";
 import Dashboard from "../pages/Admin/Dashboard";
 import NewsManagement from "../pages/Admin/NewsManagement";
+import Login from '../pages/User/Login'
+import Register from '../component/SignUpForm/SignUpForm'
 
 // User
 import DefaultLayout from "../Layout/DefaultLayout";
@@ -12,8 +14,11 @@ import NewsDetail from "../pages/User/NewsDetail";
 import Category from "../pages/User/Category";
 
 
+
 export const publicRoute = [
   { path: "/admin", layout: AdminLayout, component: Dashboard },
+  { path: "/admin/login", component: Login, layout:null},
+  { path: "/admin/register", component: Register, layout:null},
   {
     path: "/admin/accountmanagement",
     layout: AdminLayout,
@@ -32,5 +37,6 @@ export const publicRoute = [
   { path: "/", component: Home },
   { path: "/news", component: NewsDetail, param:"idNews" },
   { path: "/categories", component: Category,param:"idCategory"},
+
 
 ];

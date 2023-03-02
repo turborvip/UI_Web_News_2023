@@ -2,6 +2,11 @@ import * as request from "../ultis/request";
 import axios from "axios";
 import notify from "../ultis/notify";
 
+const token = localStorage.getItem("accessToken");
+const headers = {
+  Authorization: "Bearer " + token,
+};
+
 // Common categories
 export const getCategories = async () => {
   try {
@@ -41,18 +46,29 @@ export const getNewsDetail = async (id) => {
     notify("error", error?.message);
   }
 };
-//admin
+
+//---------------------------------------------------Admin-------------------------------------------------------
 //create category
+
+export const login = async (email, password) => {
+  try {
+    const res = await request.post(`api/login`, { email, password });
+    return res;
+  } catch (error) {
+    // notify("error", error?.message[0]);
+  }
+};
+
 export const createNewCategory = async (newCategory) => {
   try {
-    await request.post(`api/categories/create`, newCategory);
+    await request.post(`api/categories/create`, newCategory, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
 };
 export const deleteCategory = async (id) => {
   try {
-    await request.post(`api/categories/delete`, id);
+    await request.post(`api/categories/delete`, id, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
@@ -60,7 +76,7 @@ export const deleteCategory = async (id) => {
 
 export const updateCategory = async (category) => {
   try {
-    await request.post(`api/categories/update`, category);
+    await request.post(`api/categories/update`, category, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
@@ -80,7 +96,7 @@ export const getCategoryInAdmin = async (page, pageSize) => {
 //news
 export const createNews = async (news) => {
   try {
-    await request.post(`api/news/create`, news);
+    await request.post(`api/news/create`, news, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
@@ -88,14 +104,14 @@ export const createNews = async (news) => {
 
 export const updateNews = async (news) => {
   try {
-    await request.post(`api/news/update`, news);
+    await request.post(`api/news/update`, news, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
 };
 export const deleteNews = async (id) => {
   try {
-    await request.post(`api/news/delete`, { id });
+    await request.post(`api/news/delete`, { id }, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
@@ -107,6 +123,11 @@ export const getAllNews = async () => {
   } catch (error) {
     notify("error", error?.message);
   }
+};
+
+export const amount = async () => {
+  const res = await request.get("api/news/amount", { headers });
+  return res;
 };
 
 // List new flow categories
@@ -123,6 +144,25 @@ export const getNewsFlowCategoriesId = async (
         filter || ""
       }&caption=${caption || ""}&author=${author || ""}`
     );
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+// user
+export const getUser = async () => {
+  try {
+    const res = await request.get(`api/user/find`, { headers });
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+export const createUser = async (payload) => {
+  try {
+    const res = await request.post(`api/user/register`, payload, { headers });
     return res;
   } catch (error) {
     notify("error", error?.message);

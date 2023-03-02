@@ -16,6 +16,7 @@ import {
   createNews,
   deleteCategory,
   deleteNews,
+  createUser,
 } from "../../../../ApiService";
 
 function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
@@ -24,6 +25,10 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const { dataCategory } = state;
   const { dataNews } = state;
   const { isCreate } = state;
+
+  const userLocal = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : null;
 
   const [name, setName] = useState();
   const [password, setPassword] = useState();
@@ -47,8 +52,16 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
       email &&
       password === comfirmPassword
     ) {
-      const newAccount = { name, password, email };
-
+      const newAccount = {
+        name,
+        password,
+        email,
+        createBy: user?.name||null,
+        updateBy: user?.name||null,
+      };
+      createUser(newAccount).then(() => {
+        fetch();
+      });
       toggle();
     }
   };
@@ -58,8 +71,9 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
         title: nameCategory,
         url: urlCategory,
         urlParent: urlParentCategory,
+        updateBy: userLocal?.name,
+        createBy: userLocal?.name,
       };
-      console.log("category", newCategory);
       createNewCategory(newCategory).then(() => {
         fetch();
       });
@@ -80,8 +94,8 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
         description: descriptionNews,
         content: contentNews,
         author: authorNews,
-        updateBy: "asd",
-        createBy: "asda",
+        updateBy: userLocal?.name,
+        createBy: userLocal?.name,
         categories: ["1"],
       };
       createNews(newNews).then(() => {
@@ -92,12 +106,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   };
 
   const handleDeleteAccount = () => {
-    const newListAccount = [...dataAccount];
-    const index = newListAccount.findIndex((item) => item.id === data.id);
-    if (index > -1) {
-      newListAccount.splice(index, 1);
-    }
-    dispatch(actions.deleteAccount(newListAccount));
+    
     toggle();
   };
 

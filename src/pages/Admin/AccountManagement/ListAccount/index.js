@@ -5,11 +5,13 @@ import { useStore, actions } from "../../../../store";
 
 import "./ListAccount.scss";
 
-function ListAccount() {
+function ListAccount({ data, fetch }) {
   const [state, dispatch] = useStore();
-  const { dataAccount } = state;
   const [modalDelete, setModalDelete] = useState(false);
   const [accountDelete, setAccountDelete] = useState();
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
 
   const toggleDelete = (id) => {
     setAccountDelete(id);
@@ -18,7 +20,7 @@ function ListAccount() {
 
   const handleEditActive = (account) => {
     if (account.status || account.status.toString() === "false") {
-      const newListAccount = [...dataAccount];
+      const newListAccount = [...data];
       const index = newListAccount.findIndex((item) => item.id === account.id);
       newListAccount[index].status = !newListAccount[index].status;
       dispatch(actions.editAccount(newListAccount));
@@ -42,9 +44,9 @@ function ListAccount() {
           </tr>
         </thead>
         <tbody>
-          {dataAccount &&
-            dataAccount.length > 0 &&
-            dataAccount.map((account, index) => {
+          {data &&
+            data.length > 0 &&
+            data.map((account, index) => {
               return (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
@@ -58,14 +60,19 @@ function ListAccount() {
                   {/* <td>{account.status}</td> */}
                   <td>{account?.status?.toString() ?? ""}</td>
                   <td className="listaccount__table--actions">
-                    <i
-                      className="fa fa-edit"
-                      onClick={() => handleEditActive(account)}
-                    />
-                    <i
-                      className="fa fa-trash-o"
-                      onClick={() => toggleDelete(account)}
-                    />
+                    {(user?.role == "superAdmin" || user.id == account.id) && (
+                      <i
+                        className="fa fa-edit"
+                        onClick={() => handleEditActive(account)}
+                      />
+                    )}
+
+                    {user?.role == "superAdmin" && (
+                      <i
+                        className="fa fa-trash-o"
+                        onClick={() => toggleDelete(account)}
+                      />
+                    )}
                   </td>
                 </tr>
               );
@@ -77,6 +84,7 @@ function ListAccount() {
         toggle={toggleDelete}
         deletemode="account"
         data={accountDelete}
+        fetch={fetch}
       />
     </div>
   );

@@ -25,7 +25,7 @@ const initState = {
   otpStatus: "",
   otp: "",
   idUser: "",
-  auth: 3,
+  auth: localStorage.getItem('accessToken')? true: false,
   dataAccount: [...dataAccount],
   dataCategory: [...dataCategory],
   dataNews: [...dataNews],

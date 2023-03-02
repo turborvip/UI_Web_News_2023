@@ -14,7 +14,6 @@ import notify from "../../common/notify"
 function SignUpForm() {
 
     let [loading, setLoading] = useState(false);
-    const [inputUsername, setInputUsername] = useState();
     const [inputPassword, setInputPassword] = useState();
     const [inputEmail, setInputEmail] = useState();
     const [inputName, setInputName] = useState();
@@ -29,7 +28,6 @@ function SignUpForm() {
                 method: 'post',
                 url: 'http://localhost:1337/signup',
                 data: {
-                    username: inputUsername,
                     password: inputRePass,
                     email: inputEmail,
                     name: inputName
@@ -58,7 +56,6 @@ function SignUpForm() {
         }
 
     }
-    const handleUsername = (e) => { setInputUsername(e.target.value) };
     const handlePassword = (e) => { setInputPassword(e.target.value) };
     const handleEmail = (e) => { setInputEmail(e.target.value) };
     const handleName = (e) => { setInputName(e.target.value) };
@@ -68,11 +65,18 @@ function SignUpForm() {
         <div id="formLogin" className={styles.loginForm}>
             <div className={styles.caption}>Sign up</div>
             <FormInputText
+                type='text'
                 width='380px'
-                label='Username'
-                msg='You can use letters, numbers and periods.'
+                label='Email'
                 require
-                event={handleUsername}
+                event={handleEmail}
+            />
+            <FormInputText
+                type='text'
+                width='380px'
+                label='Name'
+                require
+                event={handleName}
             />
             <FormInputText
                 type='password'
@@ -89,21 +93,6 @@ function SignUpForm() {
                 require
                 event={handleRePassword}
             />
-            <FormInputText
-                type='text'
-                width='380px'
-                label='Name'
-                require
-                event={handleName}
-            />
-            <FormInputText
-                type='text'
-                width='380px'
-                label='Email'
-                require
-                event={handleEmail}
-            />
-
             <div className={styles.formBtn}>
                 <button
                     className={clsx(styles.btnSignUp, styles.btn)}
