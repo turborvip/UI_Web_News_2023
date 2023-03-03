@@ -58,13 +58,13 @@ function ListCategory({ dataCategory, fetch }) {
                   <td>{category.updated_at}</td>
                   <td>{category.updateBy}</td>
                   <td>{category.status === 1 ? "active" : "unactive"}</td>
-                  <td className="listaccount__table--actions">
+                  <td>
                     <i
-                      className="fa fa-edit"
+                      className="fa fa-edit icon"
                       onClick={() => handleEditActiveCategory(category)}
                     />
                     <i
-                      className="fa fa-trash-o"
+                      className="fa fa-trash-o icon"
                       onClick={() => toggleDelete(category)}
                     />
                   </td>

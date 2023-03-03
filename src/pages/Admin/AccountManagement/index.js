@@ -6,15 +6,16 @@ import ListAccount from "./ListAccount";
 import { getUser } from "../../../ApiService";
 
 function AccountManagement() {
-  const user = localStorage.getItem('user')
-    ? JSON.parse(localStorage.getItem('user'))
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
     : null;
-  const [data, setData] = useState();
+  const [dataUser, setDataUser] = useState();
   const [modal, setModal] = useState(false);
 
   function fetch() {
     getUser().then((res) => {
-      setData(res?.data);
+      console.log(res);
+      setDataUser(res?.data);
     });
   }
 
@@ -35,10 +36,15 @@ function AccountManagement() {
               Create new account
             </button>
           )}
-          <ListAccount data={data} fetch={fetch}/>
+          <ListAccount data={dataUser} fetch={fetch} />
         </div>
       </div>
-      <ModalAdmin modal={modal} user={user} toggle={toggle} create="account" fetch={fetch}/>
+      <ModalAdmin
+        modal={modal}
+        toggle={toggle}
+        create="account"
+        fetch={fetch}
+      />
     </div>
   );
 }

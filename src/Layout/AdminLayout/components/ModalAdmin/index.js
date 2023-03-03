@@ -17,6 +17,7 @@ import {
   deleteCategory,
   deleteNews,
   createUser,
+  deleteUser,
 } from "../../../../ApiService";
 
 function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
@@ -26,8 +27,8 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const { dataNews } = state;
   const { isCreate } = state;
 
-  const userLocal = localStorage.getItem('user')
-    ? JSON.parse(localStorage.getItem('user'))
+  const userLocal = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
     : null;
 
   const [name, setName] = useState();
@@ -56,8 +57,8 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
         name,
         password,
         email,
-        createBy: user?.name||null,
-        updateBy: user?.name||null,
+        createBy: user?.name || null,
+        updateBy: user?.name || null,
       };
       createUser(newAccount).then(() => {
         fetch();
@@ -106,7 +107,11 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   };
 
   const handleDeleteAccount = () => {
-    
+    const id = { id: data.id };
+    console.log(id);
+    deleteUser(id).then(() => {
+      fetch();
+    });
     toggle();
   };
 

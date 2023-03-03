@@ -2,12 +2,10 @@ import { useState } from "react";
 import { Table } from "reactstrap";
 import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
 import ModalUpdateAccount from "../../../../Layout/AdminLayout/components/ModalUpdateAccount";
-import { useStore, actions } from "../../../../store";
 
 import "./ListAccount.scss";
 
 function ListAccount({ data, fetch }) {
-  const [state, dispatch] = useStore();
   const [modalDelete, setModalDelete] = useState(false);
   const [accountDelete, setAccountDelete] = useState();
   const user = localStorage.getItem("user")
@@ -26,15 +24,10 @@ function ListAccount({ data, fetch }) {
   };
 
   const handleEditActive = (account) => {
-    if (account.status || account.status.toString() === "false") {
-      const newListAccount = [...data];
-      const index = newListAccount.findIndex((item) => item.id === account.id);
-      newListAccount[index].status = !newListAccount[index].status;
-      dispatch(actions.editAccount(newListAccount));
-    }
     setAccountUpdate(account);
     toggle();
   };
+
   return (
     <div className="listaccount__container">
       <Table striped className="listaccount__table">
@@ -48,7 +41,6 @@ function ListAccount({ data, fetch }) {
             <th>UpdateAt</th>
             <th>UpdateBy</th>
             <th>Role</th>
-            <th>Active</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -61,24 +53,24 @@ function ListAccount({ data, fetch }) {
                   <th scope="row">{index + 1}</th>
                   <td>{account.name}</td>
                   <td>{account.email}</td>
-                  <td>{account.createAt}</td>
+                  <td>{account.created_at}</td>
                   <td>{account.createBy}</td>
-                  <td>{account.updateAt}</td>
+                  <td>{account.updated_at}</td>
                   <td>{account.updateBy}</td>
                   <td>{account.role}</td>
                   {/* <td>{account.status}</td> */}
-                  <td>{account?.status?.toString() ?? ""}</td>
-                  <td className="listaccount__table--actions">
+
+                  <td>
                     {(user?.role == "superAdmin" || user.id == account.id) && (
                       <i
-                        className="fa fa-edit"
+                        className="fa fa-edit icon"
                         onClick={() => handleEditActive(account)}
                       />
                     )}
 
                     {user?.role == "superAdmin" && (
                       <i
-                        className="fa fa-trash-o"
+                        className="fa fa-trash-o icon"
                         onClick={() => toggleDelete(account)}
                       />
                     )}
@@ -95,7 +87,13 @@ function ListAccount({ data, fetch }) {
         data={accountDelete}
         fetch={fetch}
       />
-      <ModalUpdateAccount modal={modal} toggle={toggle} fetch={fetch} />
+      <ModalUpdateAccount
+        modal={modal}
+        toggle={toggle}
+        fetch={fetch}
+        account={accountUpdate}
+        listAccount={data}
+      />
     </div>
   );
 }
