@@ -10,20 +10,25 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
+import { updateUser } from "../../../../ApiService";
 
-function ModalUpdateAccount({ modal, toggle, account, fetch }) {
-  const [name, setName] = useState();
-  const [password, setPassword] = useState();
-  // const [comfirmPassword, setComfirmPassword] = useState();
-  const [email, setEmail] = useState();
+function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
+  // const [updateBy, setUpdateBy] = useState();
+  const [image, setImage] = useState();
 
+  const userLocal = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
   const handleUpdateAccount = () => {
     const newAccount = {
-      name: name ? name : account.name,
-      password: password ? password : account.password,
-      email: email ? email : account.email,
+      id: account.id,
+      image: image ? image : userLocal.image,
+      updateBy: userLocal.name,
     };
-
+    console.log(newAccount);
+    updateUser(newAccount).then(() => {
+      fetch();
+    });
     toggle();
   };
   return (
@@ -31,52 +36,31 @@ function ModalUpdateAccount({ modal, toggle, account, fetch }) {
       <ModalHeader toggle={toggle}>Modal title</ModalHeader>
       <ModalBody>
         <FormGroup row>
-          <Label sm={2}>Name</Label>
+          <Label sm={2}>Image</Label>
           <Col sm={10}>
             <Input
-              name="name"
-              placeholder={"@admin01"}
-              defaultValue={account ? account.name : ""}
+              name="image"
+              placeholder={""}
+              defaultValue={account ? account.image : ""}
               type="text"
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setImage(e.target.value)}
             />
           </Col>
         </FormGroup>
-        <FormGroup row>
-          <Label sm={2}>Email</Label>
-          <Col sm={10}>
-            <Input
-              name="email"
-              placeholder={"@admin01@gmail.com"}
-              defaultValue={account ? account.email : ""}
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label sm={2}>Password</Label>
-          <Col sm={10}>
-            <Input
-              name="password"
-              placeholder={"@123456"}
-              type="password"
-              defaultValue={account ? account.password : ""}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Col>
-        </FormGroup>
-        {/* <FormGroup row>
-          <Label sm={2}>Comfirm Password</Label>
-          <Col sm={10}>
-            <Input
-              name="comfirmpassword"
-              placeholder={"@123456"}
-              type="password"
-              defaultValue={account ? account.comfirmpassword : ""}
-              onChange={(e) => setComfirmPassword(e.target.value)}
-            />
-          </Col>
+        {/* <FormGroup>
+          <Label for="exampleSelect">Select</Label>
+          <Input
+            type="select"
+            name="select"
+            id="exampleSelect"
+            onChange={(e) => setUpdateBy(e.target.value)}
+          >
+            {listAccount &&
+              listAccount.length > 0 &&
+              listAccount.map((account) => {
+                return <option key={account.id}>{account.name}</option>;
+              })}
+          </Input>
         </FormGroup> */}
       </ModalBody>
       <ModalFooter>
