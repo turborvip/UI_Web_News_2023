@@ -229,6 +229,18 @@ export const updateUser = async (payload) => {
   }
 };
 
+export const logout = async () => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
+    const res = await request.post(`api/logout`, { headers });
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
 export const dataAccount = [
   {
     id: "1",

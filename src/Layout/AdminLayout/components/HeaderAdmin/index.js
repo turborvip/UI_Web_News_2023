@@ -1,6 +1,7 @@
 import { Container } from "reactstrap";
 
 import "./Header.scss";
+import { logout } from "../../../../ApiService";
 
 function HeaderAdmin() {
   const userLocal = localStorage.getItem('user')
@@ -8,7 +9,8 @@ function HeaderAdmin() {
     : null;
 
     const handleLogout = () => {
-      
+      logout().then((res)=>{
+      })
     }
   return (
     <Container fluid>

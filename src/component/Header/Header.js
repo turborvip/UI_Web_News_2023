@@ -22,15 +22,6 @@ function Header() {
                 </form>
             </div>
             <div className={clsx(styles.formBtn, 'col-xs-12  col-md-2 col-lg-2 col-sm-2')}>
-                <Link to={'/changepass'} className={styles.iconMenu}>
-                    <img src="https://img.icons8.com/ios-filled/23/undefined/password1.png" alt='' />
-                </Link>
-                <div className={styles.iconMenu}>
-                    <img src="https://img.icons8.com/windows/32/000000/user.png" alt="" />
-                </div>
-                <div className={styles.iconMenu}>
-                    <img src="https://img.icons8.com/ios-glyphs/28/000000/logout-rounded--v1.png" alt="" />
-                </div>
             </div>
         </div >
     )
