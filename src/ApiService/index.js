@@ -2,11 +2,6 @@ import * as request from "../ultis/request";
 import axios from "axios";
 import notify from "../ultis/notify";
 
-const token = localStorage.getItem("accessToken");
-const headers = {
-  Authorization: "Bearer " + token,
-};
-
 // Common categories
 export const getCategories = async () => {
   try {
@@ -61,6 +56,10 @@ export const login = async (email, password) => {
 
 export const createNewCategory = async (newCategory) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     await request.post(`api/categories/create`, newCategory, { headers });
   } catch (error) {
     notify("error", error?.message);
@@ -68,6 +67,10 @@ export const createNewCategory = async (newCategory) => {
 };
 export const deleteCategory = async (id) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     await request.post(`api/categories/delete`, id, { headers });
   } catch (error) {
     notify("error", error?.message);
@@ -76,6 +79,10 @@ export const deleteCategory = async (id) => {
 
 export const updateCategory = async (category) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     await request.post(`api/categories/update`, category, { headers });
   } catch (error) {
     notify("error", error?.message);
@@ -96,6 +103,10 @@ export const getCategoryInAdmin = async (page, pageSize) => {
 //news
 export const createNews = async (news) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     await request.post(`api/news/create`, news, { headers });
   } catch (error) {
     notify("error", error?.message);
@@ -104,6 +115,10 @@ export const createNews = async (news) => {
 
 export const updateNews = async (news) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     await request.post(`api/news/update`, news, { headers });
   } catch (error) {
     notify("error", error?.message);
@@ -111,6 +126,10 @@ export const updateNews = async (news) => {
 };
 export const deleteNews = async (id) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     await request.post(`api/news/delete`, { id }, { headers });
   } catch (error) {
     notify("error", error?.message);
@@ -128,6 +147,10 @@ export const getAllNews = async (page, pageSize) => {
 };
 
 export const amount = async () => {
+  const token = localStorage.getItem("accessToken");
+  const headers = {
+    Authorization: "Bearer " + token,
+  };
   const res = await request.get("api/news/amount", { headers });
   return res;
 };
@@ -155,6 +178,10 @@ export const getNewsFlowCategoriesId = async (
 // user
 export const getUser = async () => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     const res = await request.get(`api/user/find`, { headers });
     return res;
   } catch (error) {
@@ -164,7 +191,38 @@ export const getUser = async () => {
 
 export const createUser = async (payload) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     const res = await request.post(`api/user/register`, payload, { headers });
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+
+export const deleteUser = async (payload) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
+    const res = await request.post(`api/user/delete`, payload, { headers });
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+export const updateUser = async (payload) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
+    const res = await request.post(`api/user/update`, payload, { headers });
     return res;
   } catch (error) {
     notify("error", error?.message);

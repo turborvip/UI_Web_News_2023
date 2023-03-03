@@ -73,3 +73,13 @@
     border: none;
   }
 }
+.btn_logout-admin{
+  transition: ease 0.2s;
+  margin-left: 10px;
+}
+
+.btn_logout-admin:hover {
+  transform: rotateY(150deg);
+  transition: 0.4s;
+  cursor: pointer;
+}

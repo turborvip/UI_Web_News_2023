@@ -2,15 +2,25 @@ import axios from "axios";
 
 const request = axios.create({
   baseURL: "http://192.168.83.97/",
-
+  timeout: 60000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
+request.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (err.response.status === 401) {
+      window.location.replace("../admin/login");
+      localStorage.clear();
+    }
+  }
+);
+
 export const get = async (pathApi, options = {}) => {
   const res = await request.get(pathApi, options);
-  return res.data;
+  return res?.data;
 };
 
 export const post = async (pathApi, payload, options) => {
@@ -22,5 +32,7 @@ export const put = async (pathApi, options) => {
   const res = await request.put(pathApi, options);
   return res.data;
 };
+
+
 
 export default request;

@@ -8,26 +8,6 @@ import axios from "axios"
 const logo = '../../../image/logo/logo-nosloganblack.png'
 
 function Header() {
-    let navigate = useNavigate();
-    const handleLogout = async () => {
-        let userData = await JSON.parse(localStorage.getItem('user'));
-        await axios({
-            method: 'post',
-            url: 'http://localhost:1337/logout',
-            data: {
-                idUser: userData.id,
-            }
-        })
-            .then(async (res) => {
-                // console.log(res.data, res.otp, res.res);
-                if (res.data.status === 202) {
-                    localStorage.clear();
-                    navigate(`../login`);
-                }
-            })
-            .catch(error => console.log(error));
-
-    }
     return (
         <div className={clsx(styles.headerForm, 'row')}>
             <div className="col-xs-12  col-sm-5 col-md-7 col-lg-7">
@@ -48,7 +28,7 @@ function Header() {
                 <div className={styles.iconMenu}>
                     <img src="https://img.icons8.com/windows/32/000000/user.png" alt="" />
                 </div>
-                <div onClick={handleLogout} className={styles.iconMenu}>
+                <div className={styles.iconMenu}>
                     <img src="https://img.icons8.com/ios-glyphs/28/000000/logout-rounded--v1.png" alt="" />
                 </div>
             </div>

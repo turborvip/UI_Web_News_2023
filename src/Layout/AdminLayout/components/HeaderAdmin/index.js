@@ -3,6 +3,13 @@ import { Container } from "reactstrap";
 import "./Header.scss";
 
 function HeaderAdmin() {
+  const userLocal = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : null;
+
+    const handleLogout = () => {
+      
+    }
   return (
     <Container fluid>
       <div className="headeradmin__inner">
@@ -13,14 +20,19 @@ function HeaderAdmin() {
           </button>
         </div>
         <div className="headeradmin__action">
-          <i className="fa fa-envelope-o" />
           <div className="headeradmin__avatar">
             <span>
               <img
-                src="https://images.unsplash.com/photo-1677061856345-e6c5502f125b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+                src={`${userLocal?.image}`}
                 alt="avatar"
               />
             </span>
+          </div>
+          <div className="btn_logout-admin" onClick={handleLogout}>
+            <img
+              src="https://img.icons8.com/ios-glyphs/28/000000/logout-rounded--v1.png"
+              alt=""
+            />
           </div>
         </div>
       </div>
