@@ -14,7 +14,7 @@ function CategoryContent() {
   let { idCategory } = useParams();
   const [data, setData] = useState();
   const [category,setCategory] = useState();
-  const [page,setPage] = useState();
+  const [page,setPage] = useState(0);
   const [totalPage,setTotalPage] = useState();
   const [filter, setFilter] = useState();
 
@@ -25,7 +25,7 @@ function CategoryContent() {
   const fetch = (idCategory, page, filter) => {
     getNewsFlowCategoriesId(idCategory, page, filter)
       .then((res) => {
-        setData(res?.news);
+        setData(res?.newsList);
         setCategory(res?.category);
         setTotalPage(res?.totalPage);
       })
@@ -39,7 +39,7 @@ function CategoryContent() {
       {category && (
         <div>
           <div className={clsx(styles.topCategory)}>
-            <div className={clsx(styles.nameCategory)}>{category.title}</div>
+            <div className={clsx(styles.nameCategory)}>{category.categoryName}</div>
             <div className={styles.descriptionCategory}>
               {category.description}
             </div>
@@ -52,9 +52,8 @@ function CategoryContent() {
               style={{ width: "130px" }}
               onChange={handleFilter}
             >
-              <option value="createdAt DESC">Mới nhất</option>
-              <option value="createdAt ASC">Cũ nhất</option>
-              <option value="viewer DESC">Lượt xem</option>
+              <option value="desc">Mới nhất</option>
+              <option value="asc">Cũ nhất</option>
             </select>
           </div>
           <div className={clsx(styles.listnews)}>
@@ -69,13 +68,13 @@ function CategoryContent() {
                     <div className={clsx(styles.leftItem, "col-4")}>
                       <img
                         className={clsx(styles.imgItem, "image-fluid")}
-                        src={item.image}
+                        src={item.thumbnail}
                         alt=""
                       />
                     </div>
                     <div className={clsx(styles.rightItem, "col-8")}>
                       <div className={clsx(styles.captionItem)}>
-                        {item.caption}
+                        {item.title}
                       </div>
                       <div className={clsx(styles.createdAtItem)}>
                         {moment(item.createdAt).format(
@@ -86,7 +85,7 @@ function CategoryContent() {
                         {item.description}
                       </div>
                       <div className={clsx(styles.view)}>
-                        Lượt xem: {item.viewer}
+                        Lượt xem: {item.view}
                       </div>
                     </div>
                   </div>

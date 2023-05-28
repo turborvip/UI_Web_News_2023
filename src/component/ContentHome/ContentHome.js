@@ -9,7 +9,7 @@ import { getDataHome } from "../../ApiService";
 function ContentHome() {
   const [data, setData] = useState({});
   const [normalContent, setNormalContent] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   useLayoutEffect(() => {
     getDataHome()

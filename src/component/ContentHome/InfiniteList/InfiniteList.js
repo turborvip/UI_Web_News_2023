@@ -20,12 +20,10 @@ function InfiniteList({ state, setState, page, setPage }) {
   const getData = () => {
     getNewsInfinitive(page)
       .then(async (res) => {
-        let arr = res.data;
+        let arr = res?.data?.pageData;
         await setPage(++page);
         await setState((prev) => [...prev, ...arr]);
         await setLoadMore(false);
-
-        console.log("state", state);
       })
       .catch((error) => console.log(error));
   };
@@ -71,13 +69,13 @@ function InfiniteList({ state, setState, page, setPage }) {
               <div className={clsx("col-5", styles.imgNormalContent)}>
                 <img
                   className={clsx("img-fluid img-thumbnail ", styles.imageItem)}
-                  src={item.image}
+                  src={item?.thumbnail}
                   alt=""
                 />
               </div>
               <div className={clsx("col-7", styles.contentNormalContent)}>
                 <div className={clsx(styles.titleNormalContent)}>
-                  <div>{item.caption}</div>
+                  <div>{item.title}</div>
                 </div>
                 <div className={clsx(styles.descriptionNormalContent)}>
                   {item.description}
@@ -104,12 +102,12 @@ function InfiniteList({ state, setState, page, setPage }) {
           <img
             className={clsx("img-fluid img-thumbnail")}
             loading="lazy"
-            src="https://znews-photo.zingcdn.me/w660/Uploaded/tpuoayp/2022_06_01/Solo_thumbthumb_master.jpg"
+            src="https://znews-photo.zingcdn.me/w480/Uploaded/spuoouo/2023_04_30/phuquy_zing_42.jpg"
             alt=""
           />
         </div>
         <div className={styles.titleAds}>
-          Johnny Depp có thể trở lại 'Cướp biển vùng Caribbean'
+          Sau lễ, Phú Quý vẫn kín phòng 2 ngày cuối tuần
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -10,82 +10,77 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
-import { updateCategory } from "../../../../ApiService";
+import { getCategories, updateCategory } from "../../../../ApiService";
 
 function ModalUpdateCategory({ modal, toggle, category, fetch }) {
-  const [nameCategory, setNameCategoty] = useState();
-  const [urlCategory, setUrlCategoy] = useState();
-  const [active, setActive] = useState();
-  //   const [urlParentCategory, setUrlParentCategory] = useState();
+  const [nameCategory, setNameCategory] = useState();
+  const [descCategory, setDescCategory] = useState();
+  const [optionCategory, setOptionCategory] = useState();
+  const [urlParentCategory, setUrlParentCategory] = useState();
+
+
+  useEffect(() => {
+    getCategories().then((res) => {
+      setOptionCategory(res?.data);
+    });
+  }, []);
 
   const handleUpdateCategory = () => {
-    console.log("active", active);
     const newCategory = {
-      id: category.id,
-      title: nameCategory ? nameCategory : category.title,
-      url: urlCategory ? urlCategory : category.url,
-      status: active !== undefined ? active : category.status,
+      categoryName: nameCategory ? nameCategory : category.categoryName,
+      description: descCategory ? descCategory : category.descCategory,
+      parentId: urlParentCategory ? urlParentCategory : category.parentId,
     };
-    console.log("new", newCategory);
-    updateCategory(newCategory).then(() => {
+    updateCategory({id:category?.id,newCategory}).then(() => {
       toggle();
       fetch();
     });
   };
   return (
     <Modal isOpen={modal} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+      <ModalHeader toggle={toggle}>Update Category</ModalHeader>
       <ModalBody>
         <FormGroup row>
-          <Label sm={2}>Name</Label>
-          <Col sm={10}>
+          <Label sm={3}>Name</Label>
+          <Col sm={9}>
             <Input
               name="name"
-              placeholder={"@admin01"}
-              defaultValue={category ? category.title : ""}
+              defaultValue={category ? category.categoryName : ""}
               type="text"
-              onChange={(e) => setNameCategoty(e.target.value)}
+              onChange={(e) => setNameCategory(e.target.value)}
             />
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label sm={2}>Url</Label>
-          <Col sm={10}>
+          <Label sm={3}>Description</Label>
+          <Col sm={9}>
             <Input
-              name="email"
-              placeholder={"@admin01@gmail.com"}
-              defaultValue={category ? category.url : ""}
-              type="email"
-              onChange={(e) => setUrlCategoy(e.target.value)}
+              name="description"
+              defaultValue={category ? category.description : ""}
+              type="textarea"
+              onChange={(e) => setDescCategory(e.target.value)}
             />
           </Col>
         </FormGroup>
-        {/* <FormGroup row>
-          <Label sm={2}>UrlParent</Label>
-          <Col sm={10}>
+
+        <FormGroup row>
+          <Label sm={3}>Parent</Label>
+          <Col sm={9}>
             <Input
-              name="password"
-              placeholder={"@123456"}
-              type="text"
-              defaultValue={category ? category.urlParent : ""}
+              id="exampleSelect"
+              name="select"
+              type="select"
               onChange={(e) => setUrlParentCategory(e.target.value)}
-            />
+              defaultValue={category ? category.parentId : ""}
+            >
+              <option value={null}></option>
+              {optionCategory?.map((item, index) => (
+                <option key={index} value={item?.id}>
+                  {item?.categoryName}
+                </option>
+              ))}
+            </Input>
           </Col>
-        </FormGroup> */}
-        <FormGroup tag="fieldset">
-          <legend>Active</legend>
-          <FormGroup check>
-            <Label check>
-              <Input type="radio" name="radio1" onClick={() => setActive(1)} />{" "}
-              Active
-            </Label>
-          </FormGroup>
-          <FormGroup check>
-            <Label check>
-              <Input type="radio" name="radio1" onClick={() => setActive(0)} />
-              Unactive
-            </Label>
-          </FormGroup>
         </FormGroup>
       </ModalBody>
       <ModalFooter>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import { useStore } from "../../../../store";
-import "./ListNews.scss";
+import "./ListNews.css";
 import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
 
 function ListNews({ dataNews, fetch }) {

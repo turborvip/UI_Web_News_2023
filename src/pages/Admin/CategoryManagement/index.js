@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getCategoryInAdmin } from "../../../ApiService";
+import { getCategories, getCategoryInAdmin } from "../../../ApiService";
 import Pagination from "../../../component/Pagination/Pagination";
 import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
 // import ModalAdmin from "../../Layout/AdminLayout/components/ModalAdmin";
 
-import "./CategoryManagement.scss";
+import "./CategoryManagement.css";
 import ListCategory from "./ListCategory";
 
 function CategoryManagement() {
@@ -16,12 +16,11 @@ function CategoryManagement() {
   useEffect(() => {
     fetch();
   }, []);
-  const fetch = (id, page, filter, pageSize) => {
-    getCategoryInAdmin(page, pageSize).then((res) => {
-      console.log(res);
-      setPage(res?.page);
+  const fetch = async(id, page, filter, pageSize) => {
+    await getCategoryInAdmin(page, pageSize).then((res) => {
+      setPage(res?.currentPage);
       setTotalPage(res?.totalPage);
-      setDataCategory(res?.data);
+      setDataCategory(res?.pageData);
     });
   };
 

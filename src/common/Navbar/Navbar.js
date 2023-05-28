@@ -16,13 +16,11 @@ function Navbar() {
       .then(async (res) => {
         let arr = res.data;
         let abc = res.data;
-        arr = arr.filter((item) => {
-          return item.parent_id == null;
+        arr = arr?.filter((item) => {
+          return item.parentId == null;
         });
-        arr = arr.length > 10 ? arr.slice(0, 9) : arr;
-        console.log('arr', arr);
-        let newArray = arrayToTree(abc, { id: "id", parentId: "parent_id" });
-        console.log('tree', newArray);
+        arr = arr?.length > 10 ? arr?.slice(0, 9) : arr;
+        let newArray = arrayToTree(abc, { id: "id", parentId: "parentId" });
         setItems(arr);
         setTree(newArray);
       })
@@ -36,12 +34,12 @@ function Navbar() {
   return (
     <div className={styles.navForm}>
       <ul className={styles.nav}>
-        {items.map(
+        {items?.map(
           (item) =>
-            item.parent_id === null && (
+            !item?.parentId && (
               <li className={styles.navItem} key={item.id}>
                 <Link to={"../categories/" + item.id} className={styles.span}>
-                  {item.title}
+                  {item.categoryName}
                 </Link>
               </li>
             )

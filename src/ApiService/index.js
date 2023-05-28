@@ -5,7 +5,7 @@ import notify from "../ultis/notify";
 // Common categories
 export const getCategories = async () => {
   try {
-    const res = await request.get("/api/categories/findAll");
+    const res = await request.get("/no-auth/search-category");
     return res;
   } catch (error) {
     notify("error", error?.message);
@@ -15,8 +15,9 @@ export const getCategories = async () => {
 // Home page
 export const getDataHome = async () => {
   try {
-    const res = await request.get("api/news/inHome");
-    return res;
+    const hotNewsHour = await request.get("/no-auth/favorite-new");
+    const newContent = await request.get("/no-auth/least-new");
+    return { data: { newContent:newContent?.data, hotNewsHour: hotNewsHour?.data} };
   } catch (error) {
     notify("error", error?.message);
   }
@@ -24,7 +25,7 @@ export const getDataHome = async () => {
 
 export const getNewsInfinitive = async (page) => {
   try {
-    const res = await request.get(`api/news?page=${page}`);
+    const res = await request.get(`/no-auth/paginate-home?page=${page}&pageSize=5`);
     return res;
   } catch (error) {
     notify("error", error?.message);
@@ -32,11 +33,30 @@ export const getNewsInfinitive = async (page) => {
 };
 
 // News Detail
-
 export const getNewsDetail = async (id) => {
   try {
-    const res = await request.post(`api/news/detail`, { id });
+    const res = await request.get(`/no-auth/set-view/${id}`);
     return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
+// List new flow categories
+export const getNewsFlowCategoriesId = async (
+  idCategory,
+  page,
+  filter,
+  caption,
+  author
+) => {
+  try {
+    const res = await request.get(
+      `/no-auth/filter-new/${idCategory}?page=${page || 0}&filter=${
+        filter || ""
+      }&title=${caption || ""}&author=${author || ""}`
+    );
+    return res?.data;
   } catch (error) {
     notify("error", error?.message);
   }
@@ -47,10 +67,19 @@ export const getNewsDetail = async (id) => {
 
 export const login = async (email, password) => {
   try {
-    const res = await request.post(`api/login`, { email, password });
+    const res = await request.post(`/no-auth/login`, { username:email, password });
     return res;
   } catch (error) {
     // notify("error", error?.message[0]);
+  }
+};
+
+export const register = async (payload) => {
+  try {
+    const res = await request.post(`both/create-user`, payload);
+    return res;
+  } catch (error) {
+    notify("error", error);
   }
 };
 
@@ -60,41 +89,47 @@ export const createNewCategory = async (newCategory) => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`api/categories/create`, newCategory, { headers });
+    await request.post(`/admin/create-category`, newCategory, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
 };
+
 export const deleteCategory = async (id) => {
   try {
     const token = localStorage.getItem("accessToken");
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`api/categories/delete`, id, { headers });
+    await request.post(`/admin/delete-category/${id}`, {},{ headers });
   } catch (error) {
     notify("error", error?.message);
   }
 };
 
-export const updateCategory = async (category) => {
+export const updateCategory = async ({id,newCategory}) => {
   try {
     const token = localStorage.getItem("accessToken");
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`api/categories/update`, category, { headers });
+    await request.post(`/admin/update-category/${id}`, newCategory, { headers });
   } catch (error) {
-    notify("error", error?.message);
+    console.log(error)
+    notify("error", error?.userMessage);
   }
 };
 
 export const getCategoryInAdmin = async (page, pageSize) => {
+  const token = localStorage.getItem("accessToken");
+  const headers = {
+    Authorization: "Bearer " + token,
+  };
   try {
     const res = await request.get(
-      `/api/categories?page=${page || ""}&pageSize=${pageSize || ""}`
+      `/admin/search-category?page=${page || 0}&pageSize=${pageSize || ""}`,{headers}
     );
-    return res;
+    return res?.data;
   } catch (error) {
     notify("error", error?.message);
   }
@@ -124,6 +159,7 @@ export const updateNews = async (news) => {
     notify("error", error?.message);
   }
 };
+
 export const deleteNews = async (id) => {
   try {
     const token = localStorage.getItem("accessToken");
@@ -135,10 +171,11 @@ export const deleteNews = async (id) => {
     notify("error", error?.message);
   }
 };
+
 export const getAllNews = async (page, pageSize) => {
   try {
     const res = await request.get(
-      `api/news?page=${page || ""}&pageSize=${pageSize || ""}`
+      `/admin/search-all_news?page=${page || ""}&pageSize=${pageSize || ""}`
     );
     return res;
   } catch (error) {
@@ -151,38 +188,18 @@ export const amount = async () => {
   const headers = {
     Authorization: "Bearer " + token,
   };
-  const res = await request.get("api/news/amount", { headers });
+  const res = await request.get("/admin/count-record_news", { headers });
   return res;
 };
 
-// List new flow categories
-export const getNewsFlowCategoriesId = async (
-  idCategory,
-  page,
-  filter,
-  caption,
-  author
-) => {
-  try {
-    const res = await request.get(
-      `api/news/findNewsByCategory/${idCategory}?page=${page || 1}&filter=${
-        filter || ""
-      }&caption=${caption || ""}&author=${author || ""}`
-    );
-    return res;
-  } catch (error) {
-    notify("error", error?.message);
-  }
-};
-
 // user
-export const getUser = async () => {
+export const getUser = async ({page,pageSize}) => {
   try {
     const token = localStorage.getItem("accessToken");
     const headers = {
       Authorization: "Bearer " + token,
     };
-    const res = await request.get(`api/user/find`, { headers });
+    const res = await request.get(`/admin/search-all?page=${page||0}&size=${pageSize||10}`, { headers });
     return res;
   } catch (error) {
     notify("error", error?.message);
@@ -201,7 +218,6 @@ export const createUser = async (payload) => {
     notify("error", error?.message);
   }
 };
-
 
 export const deleteUser = async (payload) => {
   try {
@@ -235,12 +251,14 @@ export const logout = async () => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    const res = await request.post(`api/logout`, { headers });
+    localStorage.clear();
+    const res = await request.post(`/both/logout`, { headers });
     return res;
   } catch (error) {
     notify("error", error?.message);
   }
 };
+
 export const dataAccount = [
   {
     id: "1",
@@ -259,7 +277,7 @@ export const dataAccount = [
 export const dataCategory = [
   {
     id: "1",
-    name: "sport",
+    name: "Sport",
     description: " abckdfhs fsfha",
     createAt: "02/01/2023",
     createBy: "superadmin",
@@ -268,6 +286,78 @@ export const dataCategory = [
     url: "adndsaj",
     status: true,
     idParent: null,
+  },
+  {
+    id: "2",
+    name: "World",
+    description: " abckdfhs fsfha",
+    createAt: "02/01/2023",
+    createBy: "superadmin",
+    updateAt: "02/01/2023",
+    updateBy: "superadmin",
+    url: "adndsaj",
+    status: true,
+    idParent: null,
+  },
+  {
+    id: "3",
+    name: "Baby",
+    description: " abckdfhs fsfha",
+    createAt: "02/01/2023",
+    createBy: "superadmin",
+    updateAt: "02/01/2023",
+    updateBy: "superadmin",
+    url: "adndsaj",
+    status: true,
+    idParent: 1,
+  },
+  {
+    id: "4",
+    name: "Ca",
+    description: " abckdfhs fsfha",
+    createAt: "02/01/2023",
+    createBy: "superadmin",
+    updateAt: "02/01/2023",
+    updateBy: "superadmin",
+    url: "adndsaj",
+    status: true,
+    idParent: null,
+  },
+  {
+    id: "5",
+    name: "Com",
+    description: " abckdfhs fsfha",
+    createAt: "02/01/2023",
+    createBy: "superadmin",
+    updateAt: "02/01/2023",
+    updateBy: "superadmin",
+    url: "adndsaj",
+    status: true,
+    idParent: null,
+  },
+  {
+    id: "6",
+    name: "Hoa",
+    description: " abckdfhs fsfha",
+    createAt: "02/01/2023",
+    createBy: "superadmin",
+    updateAt: "02/01/2023",
+    updateBy: "superadmin",
+    url: "adndsaj",
+    status: true,
+    idParent: null,
+  },
+  {
+    id: "7",
+    name: "Quat",
+    description: " abckdfhs fsfha",
+    createAt: "02/01/2023",
+    createBy: "superadmin",
+    updateAt: "02/01/2023",
+    updateBy: "superadmin",
+    url: "adndsaj",
+    status: true,
+    idParent: 3,
   },
 ];
 

@@ -1,17 +1,17 @@
 import React from 'react'
-import styles from './MenuChildrent.module.css'
+import styles from './MenuChildren.module.css'
 import { Link } from "react-router-dom";
 
-function MenuChildrent({ data }) {
+function MenuChildren({ data }) {
     return (
-        <div className={styles.menuChildrent}>
+        <div className={styles.menuChildren}>
             {
                 data.map(item => (
                     <div key={item.data.id}>
                         <Link to={'../categories/' + item.data.id} className={styles.nameCategory}>
-                            {item.data.title}
+                            {item.data.categoryName}
                         </Link>
-                        {item.children.length === 0 ? '' : <MenuChildrent data={item.children} />}
+                        {item.children.length === 0 ? '' : <MenuChildren data={item.children} />}
                     </div>
                 ))
 
@@ -20,5 +20,5 @@ function MenuChildrent({ data }) {
         </div>
     )
 }
-export default MenuChildrent
+export default MenuChildren
 

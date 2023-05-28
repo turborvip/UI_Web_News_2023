@@ -18,7 +18,7 @@ import Category from "../pages/User/Category";
 export const publicRoute = [
   { path: "/admin", layout: AdminLayout, component: Dashboard },
   { path: "/admin/login", component: Login, layout:null},
-  { path: "/admin/register", component: Register, layout:null},
+  { path: "/register", component: Register, layout:null},
   {
     path: "/admin/accountmanagement",
     layout: AdminLayout,

@@ -1,5 +1,5 @@
 import { Container } from "reactstrap";
-import "./AdminLayout.scss";
+import "./AdminLayout.css";
 import SideBar from "./components/SideBar";
 import HeaderAdmin from "./components/HeaderAdmin";
 import { useStore, actions } from "../../store";

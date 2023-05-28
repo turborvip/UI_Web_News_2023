@@ -5,7 +5,7 @@ import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
 import ModalUpdateCategory from "../../../../Layout/AdminLayout/components/ModalUpdateCategory";
 import { useStore, actions } from "../../../../store";
 
-import "./ListCategory.scss";
+import "./ListCategory.css";
 
 function ListCategory({ dataCategory, fetch }) {
   // const [state, dispatch] = useStore();
@@ -35,13 +35,9 @@ function ListCategory({ dataCategory, fetch }) {
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Url</th>
+            <th>Description</th>
             <th>CreateAt</th>
-            <th>CreateBy</th>
             <th>UpdateAt</th>
-            <th>UpdateBy</th>
-            <th>Active</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -51,13 +47,10 @@ function ListCategory({ dataCategory, fetch }) {
               return (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
-                  <td>{category.title}</td>
-                  <td>{category.url}</td>
-                  <td>{category.created_at}</td>
-                  <td>{category.createBy}</td>
-                  <td>{category.updated_at}</td>
-                  <td>{category.updateBy}</td>
-                  <td>{category.status === 1 ? "active" : "unactive"}</td>
+                  <td>{category.categoryName}</td>
+                  <td>{category.description}</td>
+                  <td>{category.createDate}</td>
+                  <td>{category.updateDate}</td>
                   <td>
                     <i
                       className="fa fa-edit icon"

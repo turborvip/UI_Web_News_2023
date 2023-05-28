@@ -37,7 +37,6 @@ function AllRouters() {
         .then(async (res) => {
           if (res.data.status === 202) {
             if (res.data.data === 1) {
-              console.log("auth sửa cái globalstate");
               await dispatch(actions.setAuthUser(true));
             } else {
               await dispatch(actions.setAuthUser(false));

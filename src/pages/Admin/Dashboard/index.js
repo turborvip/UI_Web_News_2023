@@ -1,20 +1,27 @@
 // import { Container } from "reactstrap";
 
-import "./Dashboard.scss";
+import "./Dashboard.css";
 import { NewsOfCategory } from "./NewsOfCategory";
 import { ViewOfDaily } from "./ViewsOfDaily";
 import { ViewsOfHourly } from "./ViewsOfHourly";
 import { useStore } from "../../../store";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { amount } from "../../../ApiService";
+import { amount, logout } from "../../../ApiService";
 
 function Dashboard() {
   const [count, setCount] = useState();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     amount().then((res)=>{
-      setCount(res?.count);
+      setCount(res?.data);
+    })
+    .catch(()=>{
+      // logout().then((res) => {
+      //   navigate("../admin/login");
+      // });
     })
   }, []);
 

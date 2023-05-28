@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Neucha&family=Poppins&display=swap');
+
 .timeCreate {
     font-size: medium;
     color: rgb(175, 175, 175);
@@ -13,7 +15,7 @@
     font-size: 50px;
     font-weight: 700;
     padding: 30px 20px 0 5px;
-    font-family: sans-serif;
+    font-family: 'Poppins';
     width: 50%;
     margin: auto;
     vertical-align: baseline;
@@ -47,7 +49,7 @@
     font-size: x-large;
     font-weight: 500;
     padding: 0 20px 30px 10px;
-    font-family: 'Noto Serif', serif;
+    font-family: "calibri" ;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

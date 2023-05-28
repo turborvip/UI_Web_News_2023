@@ -3,7 +3,7 @@ import { Table } from "reactstrap";
 import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
 import ModalUpdateAccount from "../../../../Layout/AdminLayout/components/ModalUpdateAccount";
 
-import "./ListAccount.scss";
+import "./ListAccount.css";
 
 function ListAccount({ data, fetch }) {
   const [modalDelete, setModalDelete] = useState(false);
@@ -39,7 +39,6 @@ function ListAccount({ data, fetch }) {
             <th>CreateAt</th>
             <th>CreateBy</th>
             <th>UpdateAt</th>
-            <th>UpdateBy</th>
             <th>Role</th>
             <th>Actions</th>
           </tr>
@@ -47,28 +46,27 @@ function ListAccount({ data, fetch }) {
         <tbody>
           {data &&
             data.length > 0 &&
-            data.map((account, index) => {
+            data?.map((account, index) => {
               return (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
-                  <td>{account.name}</td>
-                  <td>{account.email}</td>
-                  <td>{account.created_at}</td>
-                  <td>{account.createBy}</td>
-                  <td>{account.updated_at}</td>
-                  <td>{account.updateBy}</td>
-                  <td>{account.role}</td>
+                  <td>{account?.fullName}</td>
+                  <td>{account?.email}</td>
+                  <td>{account?.createDate}</td>
+                  <td>{account?.createBy}</td>
+                  <td>{account?.updateDate}</td>
+                  <td>{account?.role?.roleName}</td>
                   {/* <td>{account.status}</td> */}
 
                   <td>
-                    {(user?.role == "superAdmin" || user.id == account.id) && (
+                    {(user?.role == "ROLE_SUPER_ADMIN" || user?.id == account?.id) && (
                       <i
                         className="fa fa-edit icon"
                         onClick={() => handleEditActive(account)}
                       />
                     )}
 
-                    {user?.role == "superAdmin" && (
+                    {user?.role == "ROLE_SUPER_ADMIN" && (
                       <i
                         className="fa fa-trash-o icon"
                         onClick={() => toggleDelete(account)}

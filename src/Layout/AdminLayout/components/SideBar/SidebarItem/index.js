@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import "./SidebarItem.scss";
+import "./SidebarItem.css";
 
 function SidebarItem({ itemName, linkTo, itemIcon }) {
   return (

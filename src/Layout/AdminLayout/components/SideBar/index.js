@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Container, Nav } from "reactstrap";
-import "./Sidebar.scss";
+import "./Sidebar.css";
 import SidebarItem from "./SidebarItem";
 
 function SideBar() {

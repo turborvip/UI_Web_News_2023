@@ -47,7 +47,7 @@ function NewsDetail() {
     <>
       {data && (
         <div>
-          <p className={clsx(styles.titleNews)}>{data.caption}</p>
+          <p className={clsx(styles.titleNews)} style={{fontFamily:'calibri', fontWeight:'bolder'}}>{data.caption}</p>
           <div className={clsx(styles.infoNews)}>
             <span className={styles.author}>{data.author}</span>
             <span className={styles.timeCreate}>
@@ -58,7 +58,7 @@ function NewsDetail() {
           <div className={clsx(styles.descriptionNews)}>{data.description}</div>
           <hr className={styles.hrNews} />
           <div className={styles.contentNews}>
-            {parse(data.content)}
+            {parse(data?.content)}
           </div>
           <NewsHistoryViewed />
         </div>

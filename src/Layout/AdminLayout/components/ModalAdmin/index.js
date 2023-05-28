@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { actions, useStore } from "../../../../store";
 import {
   Modal,
@@ -18,6 +18,7 @@ import {
   deleteNews,
   createUser,
   deleteUser,
+  getCategories,
 } from "../../../../ApiService";
 
 function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
@@ -37,7 +38,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const [email, setEmail] = useState();
 
   const [nameCategory, setNameCategoty] = useState();
-  const [urlCategory, setUrlCategoy] = useState();
+  const [descriptionCate, setDescriptionCate] = useState();
   const [urlParentCategory, setUrlParentCategory] = useState();
 
   const [captionNews, setCaptionNews] = useState();
@@ -45,6 +46,15 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const [descriptionNews, setDescriptionNews] = useState();
   const [contentNews, setContentNews] = useState();
   const [authorNews, setAuthorNews] = useState();
+
+  const [optionCategory,setOptionCategory]= useState()
+
+  useEffect(()=>{
+    getCategories().then((res)=>{
+      setOptionCategory(res?.data)
+    })
+  },[])
+
   const handleCreateNewAccount = () => {
     if (
       name &&
@@ -69,11 +79,9 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const handleCreateCategory = () => {
     if (nameCategory) {
       const newCategory = {
-        title: nameCategory,
-        url: urlCategory,
-        urlParent: urlParentCategory,
-        updateBy: userLocal?.name,
-        createBy: userLocal?.name,
+        categoryName: nameCategory,
+        description: descriptionCate,
+        parentId: urlParentCategory,
       };
       createNewCategory(newCategory).then(() => {
         fetch();
@@ -116,10 +124,11 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   };
 
   const handleDeleteCategory = () => {
-    const id = { id: data.id };
-    deleteCategory(id).then(() => {
+    const {id} = data;
+    deleteCategory(id).then(() => { 
       fetch();
-    });
+    })
+    .catch(()=>{debugger})
 
     toggle();
   };
@@ -149,10 +158,20 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                 <Col sm={10}>
                   <Input
                     name="name"
-                    placeholder={"@admin01"}
                     defaultValue={user ? user.name : ""}
                     type="text"
                     onChange={(e) => setName(e.target.value)}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label sm={2}>Username</Label>
+                <Col sm={10}>
+                  <Input
+                    name="address"
+                    type="text"
+                    defaultValue={user ? user.comfirmpassword : ""}
+                    onChange={(e) => setComfirmPassword(e.target.value)}
                   />
                 </Col>
               </FormGroup>
@@ -192,45 +211,66 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                   />
                 </Col>
               </FormGroup>
+              <FormGroup row>
+                <Label sm={2}>Address</Label>
+                <Col sm={10}>
+                  <Input
+                    name="address"
+                    type="text"
+                    defaultValue={user ? user.comfirmpassword : ""}
+                    onChange={(e) => setComfirmPassword(e.target.value)}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label sm={2}>Phone</Label>
+                <Col sm={10}>
+                  <Input
+                    name="phone"
+                    type="text"
+                    defaultValue={user ? user.comfirmpassword : ""}
+                    onChange={(e) => setComfirmPassword(e.target.value)}
+                  />
+                </Col>
+              </FormGroup>
             </>
           ) : (
             <>
               {create === "category" ? (
                 <>
                   <FormGroup row>
-                    <Label sm={2}>Name</Label>
-                    <Col sm={10}>
+                    <Label sm={3}>Name Category</Label>
+                    <Col sm={9}>
                       <Input
                         name="name"
-                        placeholder={"@admin01"}
-                        defaultValue={user ? user.name : ""}
+                        defaultValue={user ? user?.categoryName : ""}
                         type="text"
                         onChange={(e) => setNameCategoty(e.target.value)}
                       />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label sm={2}>Url</Label>
-                    <Col sm={10}>
+                    <Label sm={3}>Description</Label>
+                    <Col sm={9}>
                       <Input
-                        name="email"
-                        placeholder={"@admin01@gmail.com"}
-                        defaultValue={user ? user.email : ""}
-                        type="email"
-                        onChange={(e) => setUrlCategoy(e.target.value)}
+                        name="description"
+                        defaultValue={user ? user?.description : ""}
+                        type="textarea"
+                        onChange={(e) => setDescriptionCate(e.target.value)}
                       />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label sm={2}>UrlParent</Label>
-                    <Col sm={10}>
-                      <Input
-                        name="password"
-                        placeholder={"@123456"}
-                        type="text"
-                        defaultValue={user ? user.password : ""}
-                        onChange={(e) => setUrlParentCategory(e.target.value)}
-                      />
+                    <Label sm={3}>Parent</Label>
+                    <Col sm={9}>
+                      <Input id="exampleSelect" name="select" type="select" onChange={(e)=>setUrlParentCategory(e.target.value)}>
+                        <option value={null}></option>
+                        {
+                          optionCategory?.map((item,index)=>(
+                            <option key={index} value={item?.id}>{item?.categoryName}</option>
+                          ))
+                        }
+                      </Input>
                     </Col>
                   </FormGroup>
                 </>

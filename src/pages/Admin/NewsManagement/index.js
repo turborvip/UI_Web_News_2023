@@ -3,7 +3,7 @@ import { getAllNews } from "../../../ApiService";
 import Pagination from "../../../component/Pagination/Pagination";
 import ModalAdmin from "../../../Layout/AdminLayout/components/ModalAdmin";
 import ListNews from "./ListNews";
-import "./NewsManagement.scss";
+import "./NewsManagement.css";
 
 function NewsManagement() {
   const [modal, setModal] = useState(false);

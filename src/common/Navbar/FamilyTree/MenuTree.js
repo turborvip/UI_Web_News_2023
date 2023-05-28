@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './MenuTree.module.css'
 import clsx from 'clsx';
-import MenuChildrent from './MenuChildrent/MenuChildrent';
+import MenuChildren from './MenuChildren/MenuChildren';
 import { Link } from "react-router-dom";
 
 function MenuTree({ data }) {
@@ -12,9 +12,9 @@ function MenuTree({ data }) {
           <div key={item.data.id}>
             <div>
               <Link to={'../categories/' + item.data.id} className={styles.nameCategory}>
-                {item.data.title}
+                {item.data.categoryName}
               </Link>
-              <MenuChildrent data={item.children} />
+              <MenuChildren data={item.children} />
             </div>
           </div>
         ))

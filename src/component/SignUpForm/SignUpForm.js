@@ -1,110 +1,145 @@
-import React from 'react'
-import styles from './SignUpForm.module.css'
-import clsx from "clsx"
-import axios from "axios"
-import { memo, useState } from "react"
-import FormInputText from "../FormInputText/FormInputText"
+import React from "react";
+import styles from "./SignUpForm.module.css";
+import clsx from "clsx";
+import axios from "axios";
+import { memo, useState } from "react";
 // router
 import { useNavigate } from "react-router-dom";
 // Toast
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import notify from "../../common/notify"
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import notify from "../../common/notify";
+import { Form, Button, DatePicker, InputNumber, Select } from "antd";
+import { Input } from "reactstrap";
+import TextArea from "antd/es/input/TextArea";
+import { register } from "../../ApiService";
 
 function SignUpForm() {
+  let [loading, setLoading] = useState(false);
 
-    let [loading, setLoading] = useState(false);
-    const [inputPassword, setInputPassword] = useState();
-    const [inputEmail, setInputEmail] = useState();
-    const [inputName, setInputName] = useState();
-    const [inputRePass, setInputRePass] = useState();
+  let navigate = useNavigate();
 
-    let navigate = useNavigate();
-
-    const handleSubmit = () => {
-        setLoading(true);
-        if (inputPassword === inputRePass) {
-            axios({
-                method: 'post',
-                url: 'http://localhost:1337/signup',
-                data: {
-                    password: inputRePass,
-                    email: inputEmail,
-                    name: inputName
-                }
-            })
-                .then(async (res) => {
-                    console.log("res", res.data)
-                    if (res.data.username === false && res.data.status === 406) {
-                        notify('error', 'Username was available!');
-                        setLoading(false);
-                    } else if (res.data.password === false && res.data.status === 406) {
-                        notify('error', 'Email was available!');
-                        setLoading(false);
-                    } else if (res.data.status === 201) {
-                        await notify('success', 'Success!');
-                        await setTimeout(() => {
-                            navigate(`../login`);
-                        }, 4000)
-                    } else if (res.data.status === 500) {
-                        await notify('error', res.data.error);
-                    }
-                })
-                .catch(error => console.log(error));
-        } else {
-            notify('error', 'Re-password was wrong!');
-        }
-
-    }
-    const handlePassword = (e) => { setInputPassword(e.target.value) };
-    const handleEmail = (e) => { setInputEmail(e.target.value) };
-    const handleName = (e) => { setInputName(e.target.value) };
-    const handleRePassword = (e) => { setInputRePass(e.target.value) };
-
-    return (
-        <div id="formLogin" className={styles.loginForm}>
-            <div className={styles.caption}>Sign up</div>
-            <FormInputText
-                type='text'
-                width='380px'
-                label='Email'
-                require
-                event={handleEmail}
-            />
-            <FormInputText
-                type='text'
-                width='380px'
-                label='Name'
-                require
-                event={handleName}
-            />
-            <FormInputText
-                type='password'
-                width='380px'
-                label='Password'
-                msg='At least 7 characters and 1 letter.'
-                require
-                event={handlePassword}
-            />
-            <FormInputText
-                type='password'
-                width='380px'
-                label='Re-Password'
-                require
-                event={handleRePassword}
-            />
-            <div className={styles.formBtn}>
-                <button
-                    className={clsx(styles.btnSignUp, styles.btn)}
-                    onClick={handleSubmit}
-                    onLoad={() => setLoading(!loading)}
-                >
-                    Submit
-                </button>
-            </div>
-            <ToastContainer />
-        </div >
-    )
+  const handleSubmit = ({
+    address,
+    avatar,
+    birthday,
+    email,
+    fullName,
+    gender,
+    password,
+    phone,
+    username,
+  }) => {
+    const payload = {
+      address,
+      avatar,
+      birthday: birthday?.format("YYYY-MM-DD"),
+      email,
+      fullName,
+      gender,
+      password,
+      phone,
+      username,
+    };
+    console.log(payload);
+    setLoading(true);
+    axios({
+      method: "post",
+      url: "http://localhost:8080/api/v1/both/create-user",
+      data: payload
+    })
+      .then(async (res) => {
+        console.log("res", res?.data);
+      })
+      .catch((error) => console.log(error));
+    setLoading(false);
+  };
+  return (
+    <div style={{ paddingTop: 50 }}>
+      <div className={styles.caption}>Sign up</div>
+      <div id="formLogin" style={{ display: "flex", justifyContent: "center" }}>
+        <Form
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 14 }}
+          layout="horizontal"
+          initialValues={{ size: "default" }}
+          size={"default"}
+          style={{ minWidth: 600 }}
+          onFinish={handleSubmit}
+        >
+          <Form.Item
+            label="Full name"
+            name={"fullName"}
+            rules={[{ required: true, message: "Full name is require!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Username"
+            name={"username"}
+            rules={[{ required: true, message: "Username is require!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name={"first_password"}
+            rules={[{ required: true, message: "Password is require!" }]}
+          >
+            <Input type="password" />
+          </Form.Item>
+          <Form.Item
+            label="Re-Password"
+            name={"password"}
+            rules={[
+              { required: true, message: "Re-password is require!" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("first_password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Confirm passwords not match!")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input type="password" />
+          </Form.Item>
+          <Form.Item label="Email" name={"email"} 
+            rules={[{ required: true, message: "Please input your email!" }]}
+          > 
+            <Input />
+          </Form.Item>
+          <Form.Item label="Birthday" name={"birthday"}>
+            <DatePicker />
+          </Form.Item>
+          <Form.Item label="Phone number" name={"phone"}>
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item label="Select" name={"gender"}>
+            <Select>
+              <Select.Option value="male">Male</Select.Option>
+              <Select.Option value="female">FE-male</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name={"address"} label="Address">
+            <TextArea />
+          </Form.Item>
+          <Form.Item label="Avatar" name={"avatar"}>
+            <Input />
+          </Form.Item>
+          <Form.Item style={{ display: "flex", justifyContent: "center" }}>
+            <Button type="primary" htmlType="submit">
+              Button
+            </Button>
+          </Form.Item>
+        </Form>
+        <ToastContainer />
+      </div>
+    </div>
+  );
 }
 
-export default memo(SignUpForm)
+export default memo(SignUpForm);

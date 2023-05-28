@@ -7,12 +7,6 @@
   background-color: #fff;
   padding: 16px;
   border-radius: 8px;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
-  ~ .listnews__container {
-    margin-top: 0;
-  }
 }
 
 .listnews__inner {
@@ -26,14 +20,6 @@
   width: 30%;
   border: 1px solid #dde0e6;
   margin-right: 10px;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    overflow: hidden;
-    border: none;
-    outline: none;
-  }
 }
 
 .listnews__news--content {
@@ -67,17 +53,4 @@
   align-items: center;
   justify-content: center;
   margin: auto;
-  i {
-    font-size: 24px;
-    font-weight: 600;
-    padding: 8px;
-    // margin: auto;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    &:hover {
-      background-color: #dde0e6;
-      cursor: pointer;
-    }
-  }
 }

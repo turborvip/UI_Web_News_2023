@@ -16,18 +16,12 @@ function Footer() {
         >
           <div>Online electronic magazine</div>
           <div>Managing agency: Turborvip Publishing Association</div>
-          <div>
-            Press license: No. 75/GP-BTTTT issued by the Ministry of Information
-            and Communications on February 26, 2020
-          </div>
+          <div>Press license: No. 75/GP-BTTTT</div>
           <div>Deputy editor in charge: group 15</div>
           <div>©All copyright belongs to Knowledge Online</div>
         </div>
         <div className={clsx("col-md-4 col-lg-4 col-sm-4 col-xs-12")}>
-          <div>
-            Address: 24,Pham Van Dong stress, Le Duc Tho ward, Cau Giay
-            district, Ha Noi city, Viet Nam
-          </div>
+          <div>Address: Bac Tu Liem district, Ha Noi city, Viet Nam</div>
           <div>Hotline: 19000012004</div>
         </div>
         <div

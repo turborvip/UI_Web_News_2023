@@ -91,10 +91,10 @@ function NewsHistoryViewed() {
                 <Link to={`/news/${item.id}`} key={item.id} className={clsx(styles.NewsHistoryViewed, 'text-decoration-none')}>
                     <div className={clsx("card", styles.card)} style={{ width: '18rem' }}>
                         <div className={clsx("card-img-top", styles.cardTop)}>
-                            <img src={item.image} className={clsx('img-fluid', styles.image)} alt="" />
+                            <img src={item.thumbnail} className={clsx('img-fluid', styles.image)} alt="" />
                         </div>
                         <div className="card-body">
-                            <h5 className={clsx("card-title", styles.title)}>{item.caption}</h5>
+                            <h5 className={clsx("card-title", styles.title)}>{item.title}</h5>
                             <p className={clsx("card-text ", styles.description)}>{item.description}</p>
                         </div>
                     </div>
