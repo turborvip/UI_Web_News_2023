@@ -18,10 +18,10 @@ function NewsManagement() {
   }, []);
   const fetch = (id, page, filter, pageSize) => {
     getAllNews(page, pageSize).then((res) => {
-      console.log(res.data);
-      setPage(res?.page);
-      setTotalPage(res?.totalPage);
-      setDataNews(res?.data);
+      const { currentPage, totalPage, pageData } = res?.data;
+      setPage(currentPage);
+      setTotalPage(totalPage);
+      setDataNews(pageData);
     });
   };
   return (

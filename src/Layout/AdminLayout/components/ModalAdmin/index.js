@@ -20,6 +20,8 @@ import {
   deleteUser,
   getCategories,
 } from "../../../../ApiService";
+import Sun from "../../../../component/Editor/Sun";
+import notify from "../../../../ultis/notify";
 
 function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const [state, dispatch] = useStore();
@@ -47,13 +49,13 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const [contentNews, setContentNews] = useState();
   const [authorNews, setAuthorNews] = useState();
 
-  const [optionCategory,setOptionCategory]= useState()
+  const [optionCategory, setOptionCategory] = useState();
 
-  useEffect(()=>{
-    getCategories().then((res)=>{
-      setOptionCategory(res?.data)
-    })
-  },[])
+  useEffect(() => {
+    getCategories().then((res) => {
+      setOptionCategory(res?.data);
+    });
+  }, []);
 
   const handleCreateNewAccount = () => {
     if (
@@ -89,28 +91,23 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
       toggle();
     }
   };
-  const handleCreateNews = () => {
-    if (
-      captionNews &&
-      imageNews &&
-      descriptionNews &&
-      contentNews &&
-      authorNews
-    ) {
+  const handleCreateNews = async () => {
+    if (captionNews && imageNews && contentNews && urlParentCategory) {
       const newNews = {
-        caption: captionNews,
-        image: imageNews,
+        title: captionNews,
+        thumbnail: imageNews,
         description: descriptionNews,
         content: contentNews,
         author: authorNews,
-        updateBy: userLocal?.name,
-        createBy: userLocal?.name,
-        categories: ["1"],
+        categoryId: urlParentCategory,
       };
+      console.log(newNews);
       createNews(newNews).then(() => {
         fetch();
       });
       toggle();
+    } else {
+      await notify("error", "You need enter all require!");
     }
   };
 
@@ -124,11 +121,14 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   };
 
   const handleDeleteCategory = () => {
-    const {id} = data;
-    deleteCategory(id).then(() => { 
-      fetch();
-    })
-    .catch(()=>{debugger})
+    const { id } = data;
+    deleteCategory(id)
+      .then(() => {
+        fetch();
+      })
+      .catch(() => {
+        debugger;
+      });
 
     toggle();
   };
@@ -145,7 +145,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
     toggle();
   };
   return (
-    <Modal isOpen={modal} toggle={toggle}>
+    <Modal size="lg" isOpen={modal} toggle={toggle}>
       <ModalHeader toggle={toggle}>Modal</ModalHeader>
       {deletemode ? (
         <ModalBody>Do you really want to delete?</ModalBody>
@@ -239,8 +239,8 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
               {create === "category" ? (
                 <>
                   <FormGroup row>
-                    <Label sm={3}>Name Category</Label>
-                    <Col sm={9}>
+                    <Label sm={2}>Name Category</Label>
+                    <Col sm={10}>
                       <Input
                         name="name"
                         defaultValue={user ? user?.categoryName : ""}
@@ -250,8 +250,8 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label sm={3}>Description</Label>
-                    <Col sm={9}>
+                    <Label sm={2}>Description</Label>
+                    <Col sm={10}>
                       <Input
                         name="description"
                         defaultValue={user ? user?.description : ""}
@@ -261,15 +261,20 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label sm={3}>Parent</Label>
-                    <Col sm={9}>
-                      <Input id="exampleSelect" name="select" type="select" onChange={(e)=>setUrlParentCategory(e.target.value)}>
+                    <Label sm={2}>Parent</Label>
+                    <Col sm={10}>
+                      <Input
+                        id="exampleSelect"
+                        name="select"
+                        type="select"
+                        onChange={(e) => setUrlParentCategory(e.target.value)}
+                      >
                         <option value={null}></option>
-                        {
-                          optionCategory?.map((item,index)=>(
-                            <option key={index} value={item?.id}>{item?.categoryName}</option>
-                          ))
-                        }
+                        {optionCategory?.map((item, index) => (
+                          <option key={index} value={item?.id}>
+                            {item?.categoryName}
+                          </option>
+                        ))}
                       </Input>
                     </Col>
                   </FormGroup>
@@ -277,7 +282,9 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
               ) : (
                 <>
                   <FormGroup row>
-                    <Label sm={2}>Caption</Label>
+                    <Label sm={2}>
+                      Title <span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Col sm={10}>
                       <Input
                         name="name"
@@ -289,7 +296,9 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label sm={2}>Image</Label>
+                    <Label sm={2}>
+                      Thumbnail <span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Col sm={10}>
                       <Input
                         name=""
@@ -313,15 +322,31 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label sm={2}>Content</Label>
+                    <Label sm={2}>
+                      Parent <span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Col sm={10}>
                       <Input
-                        name=""
-                        placeholder={""}
-                        type="textarea"
-                        defaultValue={data ? data.content : ""}
-                        onChange={(e) => setContentNews(e.target.value)}
-                      />
+                        id="exampleSelect"
+                        name="select"
+                        type="select"
+                        onChange={(e) => setUrlParentCategory(e.target.value)}
+                      >
+                        <option value={null}></option>
+                        {optionCategory?.map((item, index) => (
+                          <option key={index} value={item?.id}>
+                            {item?.categoryName}
+                          </option>
+                        ))}
+                      </Input>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label sm={2}>
+                      Content <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Col sm={10}>
+                      <Sun setContentNews={setContentNews} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>

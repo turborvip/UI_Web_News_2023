@@ -2,6 +2,7 @@ import { useState } from "react";
 // import { useStore } from "../../../../store";
 import "./ListNews.css";
 import ModalAdmin from "../../../../Layout/AdminLayout/components/ModalAdmin";
+import moment from "moment";
 
 function ListNews({ dataNews, fetch }) {
   // const [state] = useStore();
@@ -29,23 +30,28 @@ function ListNews({ dataNews, fetch }) {
             <div className="listnews__container" key={index}>
               <div className="listnews__inner">
                 <div className="listnews__news--thumnel">
-                  <img src={news.image} alt={news.caption} />
+                  <img src={news?.thumbnail} alt={news.title} />
                 </div>
                 <div className="listnews__news--content">
                   <header>
-                    <div className="listnews__news--title">{news.caption}</div>
+                    <div className="listnews__news--title">{news.title}</div>
                   </header>
                   <>
                     <div className="listnews__news--categories">
                       Catagories: categories, categories
                     </div>
                     <div className="listnews__news--createby">
-                      <span>Create By: {news.createBy}</span>
-                      <span>Create At: {news.created_at}</span>
+                      <span>Create By: {news?.createBy}</span>
+                      <span>
+                        Create At: {moment(news.createDate).format("DD/MM/yyy")}
+                      </span>
                     </div>
                     <div className="listnews__news--update">
-                      <span>Update By: {news.updateBy}</span>
-                      <span>Update At: {news.updated_at}</span>
+                      <span>Update At: {news?.updatedBy}</span>
+                      <span>
+                        Update By:{" "}
+                        {moment(news?.updateDate).format("DD/MM/yyy")}
+                      </span>
                     </div>
                   </>
                 </div>

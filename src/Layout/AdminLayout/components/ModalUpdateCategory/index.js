@@ -16,7 +16,7 @@ function ModalUpdateCategory({ modal, toggle, category, fetch }) {
   const [nameCategory, setNameCategory] = useState();
   const [descCategory, setDescCategory] = useState();
   const [optionCategory, setOptionCategory] = useState();
-  const [urlParentCategory, setUrlParentCategory] = useState();
+  const [urlParentCategory, setUrlParentCategory] = useState(null);
 
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function ModalUpdateCategory({ modal, toggle, category, fetch }) {
     const newCategory = {
       categoryName: nameCategory ? nameCategory : category.categoryName,
       description: descCategory ? descCategory : category.descCategory,
-      parentId: urlParentCategory ? urlParentCategory : category.parentId,
+      parentId: urlParentCategory
     };
     updateCategory({id:category?.id,newCategory}).then(() => {
       toggle();

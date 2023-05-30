@@ -17,7 +17,9 @@ export const getDataHome = async () => {
   try {
     const hotNewsHour = await request.get("/no-auth/favorite-new");
     const newContent = await request.get("/no-auth/least-new");
-    return { data: { newContent:newContent?.data, hotNewsHour: hotNewsHour?.data} };
+    return {
+      data: { newContent: newContent?.data, hotNewsHour: hotNewsHour?.data },
+    };
   } catch (error) {
     notify("error", error?.message);
   }
@@ -25,7 +27,9 @@ export const getDataHome = async () => {
 
 export const getNewsInfinitive = async (page) => {
   try {
-    const res = await request.get(`/no-auth/paginate-home?page=${page}&pageSize=5`);
+    const res = await request.get(
+      `/no-auth/paginate-home?page=${page}&pageSize=5`
+    );
     return res;
   } catch (error) {
     notify("error", error?.message);
@@ -67,7 +71,10 @@ export const getNewsFlowCategoriesId = async (
 
 export const login = async (email, password) => {
   try {
-    const res = await request.post(`/no-auth/login`, { username:email, password });
+    const res = await request.post(`/no-auth/login`, {
+      username: email,
+      password,
+    });
     return res;
   } catch (error) {
     // notify("error", error?.message[0]);
@@ -101,21 +108,23 @@ export const deleteCategory = async (id) => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`/admin/delete-category/${id}`, {},{ headers });
+    await request.post(`/admin/delete-category/${id}`, {}, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
 };
 
-export const updateCategory = async ({id,newCategory}) => {
+export const updateCategory = async ({ id, newCategory }) => {
   try {
     const token = localStorage.getItem("accessToken");
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`/admin/update-category/${id}`, newCategory, { headers });
+    await request.post(`/admin/update-category/${id}`, newCategory, {
+      headers,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     notify("error", error?.userMessage);
   }
 };
@@ -127,7 +136,8 @@ export const getCategoryInAdmin = async (page, pageSize) => {
   };
   try {
     const res = await request.get(
-      `/admin/search-category?page=${page || 0}&pageSize=${pageSize || ""}`,{headers}
+      `/admin/search-category?page=${page || 0}&pageSize=${pageSize || ""}`,
+      { headers }
     );
     return res?.data;
   } catch (error) {
@@ -142,7 +152,7 @@ export const createNews = async (news) => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`api/news/create`, news, { headers });
+    await request.post(`/admin/create-news`, news, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
@@ -166,7 +176,7 @@ export const deleteNews = async (id) => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`api/news/delete`, { id }, { headers });
+    await request.get(`/admin/delete/${id}`, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
@@ -174,8 +184,13 @@ export const deleteNews = async (id) => {
 
 export const getAllNews = async (page, pageSize) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
     const res = await request.get(
-      `/admin/search-all_news?page=${page || ""}&pageSize=${pageSize || ""}`
+      `/admin/search-all_news?page=${page || ""}&size=${pageSize || ""}`,
+      { headers }
     );
     return res;
   } catch (error) {
@@ -193,13 +208,16 @@ export const amount = async () => {
 };
 
 // user
-export const getUser = async ({page,pageSize}) => {
+export const getUser = async ({ page, pageSize }) => {
   try {
     const token = localStorage.getItem("accessToken");
     const headers = {
       Authorization: "Bearer " + token,
     };
-    const res = await request.get(`/admin/search-all?page=${page||0}&size=${pageSize||10}`, { headers });
+    const res = await request.get(
+      `/admin/search-all?page=${page || 0}&size=${pageSize || 10}`,
+      { headers }
+    );
     return res;
   } catch (error) {
     notify("error", error?.message);
