@@ -21,6 +21,8 @@ import { Spinner } from "reactstrap";
 
 const { Paragraph } = Typography;
 
+// const login_success = () => toast.success("Register success!");
+// const login_error = (error) => toast.error(error.response.data.userMessage);
 function LoginForm() {
   let [loading, setLoading] = useState(false);
   const [state, dispatch] = useStore();

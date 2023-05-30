@@ -6,19 +6,24 @@ import { memo, useState } from "react";
 // router
 import { useNavigate } from "react-router-dom";
 // Toast
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import notify from "../../common/notify";
 import { Form, Button, DatePicker, InputNumber, Select } from "antd";
 import { Input } from "reactstrap";
 import TextArea from "antd/es/input/TextArea";
 import { register } from "../../ApiService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function SignUpForm() {
   let [loading, setLoading] = useState(false);
 
   let navigate = useNavigate();
 
+
+  const [form] = Form.useForm()
+  const login_success = () => toast.success("Register success!");
+  const login_error = (error) => toast.error(error.response.data.userMessage);
   const handleSubmit = ({
     address,
     avatar,
@@ -45,17 +50,23 @@ function SignUpForm() {
     setLoading(true);
     axios({
       method: "post",
-      url: "http://localhost:8080/api/v1/both/create-user",
+      url: "http://localhost:8080/api/v1/no-auth/create-user",
       data: payload
     })
       .then(async (res) => {
         console.log("res", res?.data);
+        form.resetFields()
+        setTimeout(() => {
+          navigate("/admin/login")
+        }, 2000);
+        login_success()
       })
-      .catch((error) => console.log(error));
+      .catch((error) => login_error(error));
+
     setLoading(false);
   };
   return (
-    <div style={{ paddingTop: 50 }}>
+    <div className={styles.test} >
       <div className={styles.caption}>Sign up</div>
       <div id="formLogin" style={{ display: "flex", justifyContent: "center" }}>
         <Form
@@ -107,9 +118,9 @@ function SignUpForm() {
           >
             <Input type="password" />
           </Form.Item>
-          <Form.Item label="Email" name={"email"} 
+          <Form.Item label="Email" name={"email"}
             rules={[{ required: true, message: "Please input your email!" }]}
-          > 
+          >
             <Input />
           </Form.Item>
           <Form.Item label="Birthday" name={"birthday"}>
@@ -127,12 +138,12 @@ function SignUpForm() {
           <Form.Item name={"address"} label="Address">
             <TextArea />
           </Form.Item>
-          <Form.Item label="Avatar" name={"avatar"}>
+          {/* <Form.Item label="Avatar" name={"avatar"}>
             <Input />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item style={{ display: "flex", justifyContent: "center" }}>
             <Button type="primary" htmlType="submit">
-              Button
+              Submit
             </Button>
           </Form.Item>
         </Form>
