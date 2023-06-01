@@ -12,9 +12,12 @@ import { getNewsWatched } from "../../ApiService";
 function NewsHistoryViewed() {
   const [dataWatched, setDataWatched] = useState();
   useEffect(() => {
-    getNewsWatched().then((res) => {
-      setDataWatched(res?.data);
-    });
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      getNewsWatched().then((res) => {
+        setDataWatched(res?.data);
+      });
+    }
   }, []);
   let settings = {
     dots: false,

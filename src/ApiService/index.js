@@ -187,7 +187,7 @@ export const updateNews = async ({news,id}) => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`/admin/update/news/${id}`, news, { headers });
+    await request.post(`/admin/news/update/${id}`, news, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
@@ -273,13 +273,13 @@ export const deleteUser = async (payload) => {
   }
 };
 
-export const updateUser = async (payload) => {
+export const updateUser = async ({id,newAccount}) => {
   try {
     const token = localStorage.getItem("accessToken");
     const headers = {
       Authorization: "Bearer " + token,
     };
-    const res = await request.post(`api/user/update`, payload, { headers });
+    const res = await request.post(`/both/update-user/${id}`, newAccount, { headers });
     return res;
   } catch (error) {
     notify("error", error?.message);

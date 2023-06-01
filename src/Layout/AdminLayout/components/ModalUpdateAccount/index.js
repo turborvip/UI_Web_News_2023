@@ -25,9 +25,8 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
   const userLocal = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : null;
-  const handleUpdateAccount = () => {
+  const handleUpdateAccount = async () => {
     const newAccount = {
-      id: account.id,
       avatar: avatar ? avatar : account.image,
       fullName: name ? name : account?.name,
       email: email ? email : account?.email,
@@ -35,10 +34,10 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
       address: address ? address : account?.address,
       phone: phone ? phone : account?.phone,
     };
-    updateUser(newAccount).then(() => {
+    await updateUser({id:account?.id,newAccount}).then(() => {
       fetch();
+      toggle();
     });
-    toggle();
   };
   return (
     <Modal isOpen={modal} toggle={toggle}>
@@ -50,6 +49,7 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
             <Input
               name="name"
               type="text"
+              defaultValue={account?.fullName}
               onChange={(e) => setName(e.target.value)}
             />
           </Col>
@@ -61,6 +61,7 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
               name="email"
               placeholder={"@admin01@gmail.com"}
               type="email"
+              defaultValue={account?.email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Col>
@@ -71,6 +72,7 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
             <Input
               name="birthday"
               type="date"
+              defaultValue={account?.birthday}
               onChange={(e) => setBirthday(e.target.value)}
             />
           </Col>
@@ -81,6 +83,7 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
             <Input
               name="address"
               type="text"
+              defaultValue={account?.address}
               onChange={(e) => setAddress(e.target.value)}
             />
           </Col>
@@ -91,6 +94,7 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
             <Input
               name="avatar"
               type="text"
+              defaultValue={account?.avatar}
               onChange={(e) => setAvatar(e.target.value)}
             />
           </Col>
@@ -101,6 +105,7 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
             <Input
               name="phone"
               type="text"
+              defaultValue={account?.phone}
               onChange={(e) => setPhone(e.target.value)}
             />
           </Col>

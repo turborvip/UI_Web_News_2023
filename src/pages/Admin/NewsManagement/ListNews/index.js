@@ -79,6 +79,7 @@ function ListNews({ dataNews, fetch }) {
         toggle={toggleEditNews}
         create
         data={newsUpdate}
+        fetch={fetch}
       />
       <ModalAdmin
         modal={modalDelete}

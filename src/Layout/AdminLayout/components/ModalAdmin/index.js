@@ -23,6 +23,7 @@ import {
 } from "../../../../ApiService";
 import Sun from "../../../../component/Editor/Sun";
 import notify from "../../../../ultis/notify";
+import moment from "moment";
 
 function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const [state, dispatch] = useStore();
@@ -41,12 +42,9 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const [email, setEmail] = useState();
   const [birthday, setBirthday] = useState();
   const [phone, setPhone] = useState();
-  const [avatar,setAvatar] = useState();
-  const [address,setAddress] = useState();
-  const [username,setUsername] = useState();
-
-
-
+  const [avatar, setAvatar] = useState();
+  const [address, setAddress] = useState();
+  const [username, setUsername] = useState();
 
   const [nameCategory, setNameCategoty] = useState();
   const [descriptionCate, setDescriptionCate] = useState();
@@ -68,7 +66,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
 
   const handleCreateNewAccount = () => {
     if (
-      username&&
+      username &&
       name &&
       password &&
       comfirmPassword &&
@@ -78,15 +76,15 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
     ) {
       const newAccount = {
         username,
-        fullName:name,
+        fullName: name,
         password,
         email,
         createBy: user?.name || null,
         updateBy: user?.name || null,
-        birthday,
+        birthday: moment(birthday).format("DD/MM/yyyy"),
         avatar,
         address,
-        phone
+        phone,
       };
       createUser(newAccount).then(() => {
         fetch();
@@ -170,7 +168,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
     await updateNews({ id: data?.id, news: updateNew }).then(() => {
       toggle();
     });
-     fetch();
+    fetch();
   };
   return (
     <Modal size="lg" isOpen={modal} toggle={toggle}>
