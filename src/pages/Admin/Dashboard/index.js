@@ -19,9 +19,9 @@ function Dashboard() {
       setCount(res?.data);
     })
     .catch(()=>{
-      // logout().then((res) => {
-      //   navigate("../admin/login");
-      // });
+      logout().then((res) => {
+        navigate("../login");
+      });
     })
   }, []);
 

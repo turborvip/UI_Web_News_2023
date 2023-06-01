@@ -16,10 +16,17 @@
 }
 
 .listnews__news--thumnel {
-  height: 100%;
-  width: 30%;
+  /* height: 100%; */
+  width: 350px;
   border: 1px solid #dde0e6;
   margin-right: 10px;
+}
+
+.img_thumbnail{
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  object-fit: cover;
 }
 
 .listnews__news--content {
@@ -42,9 +49,6 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  span {
-    width: 50%;
-  }
 }
 
 .listnews__news--action {

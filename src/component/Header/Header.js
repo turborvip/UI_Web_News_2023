@@ -1,12 +1,14 @@
 import clsx from "clsx";
 import styles from "./Header.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from "antd/es/input/Search";
+import { LoginOutlined, UserAddOutlined } from "@ant-design/icons";
 
 const logo = "../../../image/logo/logo-nosloganblack.png";
 const onSearch = (value) => console.log(value);
 
 function Header() {
+  let navigate = useNavigate();
   return (
     <div className={clsx(styles.headerForm, "row")}>
       <div className="col-xs-12  col-sm-5 col-md-7 col-lg-7">
@@ -33,7 +35,10 @@ function Header() {
           styles.formBtn,
           "col-xs-12  col-md-2 col-lg-2 col-sm-2"
         )}
-      ></div>
+      >
+        <LoginOutlined  style={{cursor:'pointer',width:'20px'}} onClick={()=>navigate("../login")}/>
+        <UserAddOutlined onClick={()=>navigate("../register")}/>
+      </div>
     </div>
   );
 }

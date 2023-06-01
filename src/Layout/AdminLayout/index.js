@@ -13,7 +13,7 @@ function AdminLayout({ children }) {
 
   useEffect(() => {
     if(!state?.auth){
-      navigate(`../admin/login`)
+      navigate(`../login`)
     }
   }, [])
   
@@ -31,7 +31,7 @@ function AdminLayout({ children }) {
           <ToastContainer />
         </Container>
       ) : (
-        navigate(`../admin/login`)
+        navigate(`../login`)
       )}
     </>
   );

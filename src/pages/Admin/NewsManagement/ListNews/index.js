@@ -30,7 +30,7 @@ function ListNews({ dataNews, fetch }) {
             <div className="listnews__container" key={index}>
               <div className="listnews__inner">
                 <div className="listnews__news--thumnel">
-                  <img src={news?.thumbnail} alt={news.title} />
+                  <img src={news?.thumbnail} alt={news.title} className="img_thumbnail"/>
                 </div>
                 <div className="listnews__news--content">
                   <header>

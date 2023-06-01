@@ -1,4 +1,5 @@
 import axios from "axios";
+import notify from "./notify";
 
 const request = axios.create({
   baseURL: "http://localhost:8080/api/v1",
@@ -12,8 +13,12 @@ request.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response.status === 401) {
-      window.location.replace("../admin/login");
+      window.location.replace("../login");
       localStorage.clear();
+    }
+    if(err.response.status === 500){
+      console.log("Aaaa",err)
+      notify("error",err?.response?.data?.userMessage)
     }
   }
 );

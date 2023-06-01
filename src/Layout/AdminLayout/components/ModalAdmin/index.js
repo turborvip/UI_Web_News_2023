@@ -76,6 +76,8 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
         fetch();
       });
       toggle();
+    }else{
+      notify("error","You can fill all information")
     }
   };
   const handleCreateCategory = () => {

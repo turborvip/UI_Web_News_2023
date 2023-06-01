@@ -230,7 +230,7 @@ export const createUser = async (payload) => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    const res = await request.post(`api/user/register`, payload, { headers });
+    const res = await request.post(`/admin/create-user-by-admin`, payload, { headers });
     return res;
   } catch (error) {
     notify("error", error?.message);
@@ -243,7 +243,7 @@ export const deleteUser = async (payload) => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    const res = await request.post(`api/user/delete`, payload, { headers });
+    const res = await request.post(`/admin/delete-user/${payload?.id}`,{}, { headers });
     return res;
   } catch (error) {
     notify("error", error?.message);

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./component/LoginForm_User/LoginForm";
 import NotFound from "./pages/NotFound";
 import Category from "./pages/Category";
 import NewsDetail from "./pages/NewsDetail";
@@ -10,9 +10,7 @@ import axios from "axios";
 import { useLayoutEffect } from "react";
 import { useStore, actions } from "./store";
 import Loading from "./component/Loading/Loading";
-import SignUp from "./pages/SignUp";
 import ChangePassPage from "./pages/ChangePassPage";
-import ForgotPass from "./component/ForgotPass/ForgotPass";
 import Admin from "./pages/Admin";
 
 function AllRouters() {
@@ -74,18 +72,7 @@ function AllRouters() {
     <>
       <Router>
         <Routes>
-          <Route path="/forgotpass" element={<ForgotPass />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/admin" element={<Admin />}></Route>
-          <Route path="/category" element={<Category />}>
-            <Route path=":idCategory"></Route>
-          </Route>
-          <Route path="/news" element={<NewsDetail />}>
-            <Route path=":idNews"></Route>
-          </Route>
           <Route path="/" element={<App />}></Route>
-          <Route path="/changepass" element={<ChangePassPage />}></Route>
           <Route path="*" element={<NotFound />}></Route>
 
           {routerRender(state.auth)}

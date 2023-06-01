@@ -39,11 +39,19 @@ function LoginForm() {
         } else {
           localStorage.setItem("accessToken", res?.data?.accessToken);
           const user = res?.data;
-          delete user.accessToken;
+          delete user?.accessToken;
           localStorage.setItem("user", JSON.stringify(res?.data));
           await dispatch(actions.setAuthUser(true));
-          navigate(`../admin`);
+          let isUser = user?.role.find((ele)=>ele == "ROLE_USER")
+          let isAdmin = user?.role.find((ele)=>ele == "ROLE_SUPER_ADMIN" || ele == "ROLE_ADMIN")
+
+          if(isUser){
+            navigate(`../`);
+          }else if(isAdmin){
+            navigate(`../admin`);
+          }
         }
+        setLoading(false)
       })
       .catch((error) => {
         console.log(error);
@@ -52,7 +60,7 @@ function LoginForm() {
 
   return (
     <div
-      className="mt-5 "
+      className="mt-5 mb-5"
       style={{
         display: "flex",
         justifyContent: "center",
@@ -61,11 +69,10 @@ function LoginForm() {
       }}
     >
       <Typography.Title level={1} style={{ margin: 50, textAlign: "center" }}>
-        Login to Admin page <i style={{ color: "#2B2F64" }}>SKY</i>{" "}
-        <i style={{ color: "red" }}>NEWS</i>
+        Login
       </Typography.Title>
-      <Card style={{ padding: 20 }}>
-        <Form
+      <Card style={{ padding: 20 }} className="mb-5">
+        <Form 
           name="basic"
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 16 }}

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import Search from "antd/es/transfer/search";
 
 function HeaderAdmin() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const userLocal = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
@@ -14,7 +14,7 @@ function HeaderAdmin() {
 
   const handleLogout = () => {
     logout().then((res) => {
-      navigate("../admin/login");
+      // navigate("../login");
     });
   };
   return (
