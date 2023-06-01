@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./SignUpForm.module.css";
-import clsx from "clsx";
 import axios from "axios";
 import { memo, useState } from "react";
 // router
@@ -14,6 +13,7 @@ import TextArea from "antd/es/input/TextArea";
 import { register } from "../../ApiService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 function SignUpForm() {
   let [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ function SignUpForm() {
     const payload = {
       address,
       avatar,
-      birthday: birthday?.format("dd/MM/yyyy"),
+      birthday: moment(birthday)?.format("DD/MM/yyyy"),
       email,
       fullName,
       gender,

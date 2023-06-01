@@ -39,12 +39,35 @@ export const getNewsInfinitive = async (page) => {
 // News Detail
 export const getNewsDetail = async (id) => {
   try {
-    const res = await request.get(`/no-auth/set-view/${id}`);
+    let user = localStorage.getItem("user");
+    user = user ? JSON.parse(user) : undefined;
+
+    const token = localStorage.getItem("accessToken");
+    const headers = token ? {
+      Authorization: "Bearer " + token,
+    } : null;
+
+    const res = await request.get(`/no-auth/save-news-watched/${id}`,{headers});
     return res;
   } catch (error) {
     notify("error", error?.message);
   }
 };
+
+export const getNewsWatched = async (id) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const headers = token ? {
+      Authorization: "Bearer " + token,
+    } : null;
+
+    const res = await request.get(`/user/get-all-news-watched`,{headers});
+    return res;
+  } catch (error) {
+    notify("error", error?.message);
+  }
+};
+
 
 // List new flow categories
 export const getNewsFlowCategoriesId = async (
@@ -136,7 +159,7 @@ export const getCategoryInAdmin = async (page, pageSize) => {
   };
   try {
     const res = await request.get(
-      `/admin/search-category?page=${page || 0}&pageSize=${pageSize || ""}`,
+      `/admin/search-category?page=${--page || 0}&pageSize=${pageSize || ""}`,
       { headers }
     );
     return res?.data;
@@ -158,13 +181,13 @@ export const createNews = async (news) => {
   }
 };
 
-export const updateNews = async (news) => {
+export const updateNews = async ({news,id}) => {
   try {
     const token = localStorage.getItem("accessToken");
     const headers = {
       Authorization: "Bearer " + token,
     };
-    await request.post(`api/news/update`, news, { headers });
+    await request.post(`/admin/update/news/${id}`, news, { headers });
   } catch (error) {
     notify("error", error?.message);
   }
@@ -189,7 +212,7 @@ export const getAllNews = async (page, pageSize) => {
       Authorization: "Bearer " + token,
     };
     const res = await request.get(
-      `/admin/search-all_news?page=${page || ""}&size=${pageSize || ""}`,
+      `/admin/search-all_news?page=${--page || ""}&size=${pageSize || ""}`,
       { headers }
     );
     return res;
@@ -215,7 +238,7 @@ export const getUser = async ({ page, pageSize }) => {
       Authorization: "Bearer " + token,
     };
     const res = await request.get(
-      `/admin/search-all?page=${page || 0}&size=${pageSize || 10}`,
+      `/admin/search-all?page=${--page || 0}&size=${pageSize || 10}`,
       { headers }
     );
     return res;

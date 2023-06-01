@@ -30,7 +30,11 @@ function ListNews({ dataNews, fetch }) {
             <div className="listnews__container" key={index}>
               <div className="listnews__inner">
                 <div className="listnews__news--thumnel">
-                  <img src={news?.thumbnail} alt={news.title} className="img_thumbnail"/>
+                  <img
+                    src={news?.thumbnail}
+                    alt={news.title}
+                    className="img_thumbnail"
+                  />
                 </div>
                 <div className="listnews__news--content">
                   <header>
@@ -38,7 +42,7 @@ function ListNews({ dataNews, fetch }) {
                   </header>
                   <>
                     <div className="listnews__news--categories">
-                      Catagories: categories, categories
+                      Catagories: {news?.category?.categoryName}
                     </div>
                     <div className="listnews__news--createby">
                       <span>Create By: {news?.createBy}</span>

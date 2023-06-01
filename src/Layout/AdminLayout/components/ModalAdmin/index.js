@@ -19,6 +19,7 @@ import {
   createUser,
   deleteUser,
   getCategories,
+  updateNews,
 } from "../../../../ApiService";
 import Sun from "../../../../component/Editor/Sun";
 import notify from "../../../../ultis/notify";
@@ -38,6 +39,14 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
   const [password, setPassword] = useState();
   const [comfirmPassword, setComfirmPassword] = useState();
   const [email, setEmail] = useState();
+  const [birthday, setBirthday] = useState();
+  const [phone, setPhone] = useState();
+  const [avatar,setAvatar] = useState();
+  const [address,setAddress] = useState();
+  const [username,setUsername] = useState();
+
+
+
 
   const [nameCategory, setNameCategoty] = useState();
   const [descriptionCate, setDescriptionCate] = useState();
@@ -59,25 +68,32 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
 
   const handleCreateNewAccount = () => {
     if (
+      username&&
       name &&
       password &&
       comfirmPassword &&
       email &&
-      password === comfirmPassword
+      password === comfirmPassword &&
+      birthday
     ) {
       const newAccount = {
-        name,
+        username,
+        fullName:name,
         password,
         email,
         createBy: user?.name || null,
         updateBy: user?.name || null,
+        birthday,
+        avatar,
+        address,
+        phone
       };
       createUser(newAccount).then(() => {
         fetch();
       });
       toggle();
-    }else{
-      notify("error","You can fill all information")
+    } else {
+      notify("error", "You can fill all information");
     }
   };
   const handleCreateCategory = () => {
@@ -142,9 +158,19 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
     toggle();
   };
 
-  const handleUpdateNews = () => {
-    const updateNews = {};
-    toggle();
+  const handleUpdateNews = async () => {
+    const updateNew = {
+      title: captionNews || data?.title,
+      thumbnail: imageNews || data?.thumbnail,
+      description: descriptionNews || data?.description,
+      content: contentNews || data?.content,
+      author: authorNews || data?.author,
+      categoryId: urlParentCategory || data?.category?.id,
+    };
+    await updateNews({ id: data?.id, news: updateNew }).then(() => {
+      toggle();
+    });
+     fetch();
   };
   return (
     <Modal size="lg" isOpen={modal} toggle={toggle}>
@@ -160,7 +186,6 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                 <Col sm={10}>
                   <Input
                     name="name"
-                    defaultValue={user ? user.name : ""}
                     type="text"
                     onChange={(e) => setName(e.target.value)}
                   />
@@ -172,8 +197,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                   <Input
                     name="address"
                     type="text"
-                    defaultValue={user ? user.comfirmpassword : ""}
-                    onChange={(e) => setComfirmPassword(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </Col>
               </FormGroup>
@@ -183,9 +207,18 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                   <Input
                     name="email"
                     placeholder={"@admin01@gmail.com"}
-                    defaultValue={user ? user.email : ""}
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label sm={2}>Birthday</Label>
+                <Col sm={10}>
+                  <Input
+                    name="birthday"
+                    type="date"
+                    onChange={(e) => setBirthday(e.target.value)}
                   />
                 </Col>
               </FormGroup>
@@ -196,7 +229,6 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                     name="password"
                     placeholder={"@123456"}
                     type="password"
-                    defaultValue={user ? user.password : ""}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Col>
@@ -208,7 +240,6 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                     name="comfirmpassword"
                     placeholder={"@123456"}
                     type="password"
-                    defaultValue={user ? user.comfirmpassword : ""}
                     onChange={(e) => setComfirmPassword(e.target.value)}
                   />
                 </Col>
@@ -219,8 +250,17 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                   <Input
                     name="address"
                     type="text"
-                    defaultValue={user ? user.comfirmpassword : ""}
-                    onChange={(e) => setComfirmPassword(e.target.value)}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label sm={2}>Avatar</Label>
+                <Col sm={10}>
+                  <Input
+                    name="avatar"
+                    type="text"
+                    onChange={(e) => setAvatar(e.target.value)}
                   />
                 </Col>
               </FormGroup>
@@ -230,8 +270,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                   <Input
                     name="phone"
                     type="text"
-                    defaultValue={user ? user.comfirmpassword : ""}
-                    onChange={(e) => setComfirmPassword(e.target.value)}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </Col>
               </FormGroup>
@@ -269,6 +308,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                         id="exampleSelect"
                         name="select"
                         type="select"
+                        defaultValue={data ? data?.category?.id : ""}
                         onChange={(e) => setUrlParentCategory(e.target.value)}
                       >
                         <option value={null}></option>
@@ -291,7 +331,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                       <Input
                         name="name"
                         placeholder={""}
-                        defaultValue={data ? data.caption : ""}
+                        defaultValue={data ? data.title : ""}
                         type="text"
                         onChange={(e) => setCaptionNews(e.target.value)}
                       />
@@ -305,7 +345,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                       <Input
                         name=""
                         placeholder={""}
-                        defaultValue={data ? data.image : ""}
+                        defaultValue={data ? data.thumbnail : ""}
                         type="text"
                         onChange={(e) => setImageNews(e.target.value)}
                       />
@@ -332,6 +372,7 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                         id="exampleSelect"
                         name="select"
                         type="select"
+                        defaultValue={data ? data?.category?.id : ""}
                         onChange={(e) => setUrlParentCategory(e.target.value)}
                       >
                         <option value={null}></option>
@@ -348,7 +389,10 @@ function ModalAdmin({ modal, toggle, create, user, deletemode, data, fetch }) {
                       Content <span style={{ color: "red" }}>*</span>
                     </Label>
                     <Col sm={10}>
-                      <Sun setContentNews={setContentNews} />
+                      <Sun
+                        setContentNews={setContentNews}
+                        values={data ? data?.content : undefined}
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>

@@ -18,7 +18,7 @@ function CategoryManagement() {
   }, []);
   const fetch = async(id, page, filter, pageSize) => {
     await getCategoryInAdmin(page, pageSize).then((res) => {
-      setPage(res?.currentPage);
+      setPage(res?.currentPage + 1);
       setTotalPage(res?.totalPage);
       setDataCategory(res?.pageData);
     });

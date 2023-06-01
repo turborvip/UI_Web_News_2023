@@ -16,8 +16,8 @@ function AccountManagement() {
   const [dataUser, setDataUser] = useState();
   const [modal, setModal] = useState(false);
 
-  function fetch() {
-    getUser({}).then((res) => {
+  function fetch(id, page, filter, pageSize) {
+    getUser({page}).then((res) => {
       setDataUser(res?.data?.pageData);
       setPage(res?.data?.currentPage);
       setTotalPage(res?.data?.totalPage)

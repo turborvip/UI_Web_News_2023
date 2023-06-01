@@ -12,6 +12,10 @@ const request = axios.create({
 request.interceptors.response.use(
   (res) => res,
   (err) => {
+    if (err.response.status === 403) {
+      window.location.replace("../login");
+      localStorage.clear();
+    }
     if (err.response.status === 401) {
       window.location.replace("../login");
       localStorage.clear();
