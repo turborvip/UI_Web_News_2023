@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 .topItemCenter,
 .topItemRight {
     width: 100%;
@@ -19,6 +21,7 @@
     text-overflow: ellipsis;
     word-break: break-word;
     color: black;
+    font-family: "Roboto", sans-serif;
 }
 
 .titleItemCenter {
@@ -54,6 +57,7 @@
     font-size: small;
     color: rgb(99, 99, 99);
     color: black;
+    font-family: "Roboto", sans-serif;
 }
 
 .imageItem {

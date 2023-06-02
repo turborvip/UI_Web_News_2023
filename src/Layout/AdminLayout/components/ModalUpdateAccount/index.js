@@ -11,10 +11,10 @@ import {
   ModalHeader,
 } from "reactstrap";
 import { updateUser } from "../../../../ApiService";
+import moment from "moment";
 
 function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
   // const [updateBy, setUpdateBy] = useState();
-  const [image, setImage] = useState();
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [birthday, setBirthday] = useState();
@@ -28,9 +28,9 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
   const handleUpdateAccount = async () => {
     const newAccount = {
       avatar: avatar ? avatar : account.image,
-      fullName: name ? name : account?.name,
+      fullName: name ? name : account?.fullName,
       email: email ? email : account?.email,
-      birthday: birthday ? birthday : account?.birthday,
+      birthday: birthday ? moment(birthday).format("DD/MM/yyyy") : account?.birthday,
       address: address ? address : account?.address,
       phone: phone ? phone : account?.phone,
     };

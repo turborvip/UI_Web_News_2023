@@ -1,12 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap");
+
 .menuChildren {
-    padding: 0px 15px;
+  padding: 0px 15px;
 }
 
 .nameCategory {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
 }
 
 .nameCategory:hover {
-    color: white;
+  color: white;
 }

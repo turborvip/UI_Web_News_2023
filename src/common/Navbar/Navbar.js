@@ -5,11 +5,16 @@ import { arrayToTree } from "performant-array-to-tree";
 import MenuTree from "./FamilyTree/MenuTree";
 import { Link } from "react-router-dom";
 import { getCategories } from "../../ApiService";
+import { Affix } from "antd";
+import clsx from "clsx";
 
 function Navbar() {
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(false);
   const [tree, setTree] = useState();
+  const [background, setBackground] = useState(false);
+  const [fontColor, setFontColor] = useState(false);
+
 
   useEffect(() => {
     getCategories()
@@ -31,14 +36,22 @@ function Navbar() {
     setCount(!count);
   };
 
+  const scroll = () =>{
+    setBackground(true);
+    setFontColor(true)
+  }
+
+
+
   return (
-    <div className={styles.navForm}>
+    <Affix offsetTop={0} onChange={scroll}>
+    <div className={styles.navForm} >
       <ul className={styles.nav}>
         {items?.map(
           (item) =>
             !item?.parentId && (
-              <li className={styles.navItem} key={item.id}>
-                <Link to={"../categories/" + item.id} className={styles.span}>
+              <li className={clsx(styles.navItem)} key={item.id}>
+                <Link to={"../categories/" + item.id} className={clsx(styles.span,`${background? 'light_bg' : ""} ${fontColor ? 'dark_font' : ""}`)}>
                   {item.categoryName}
                 </Link>
               </li>
@@ -53,6 +66,7 @@ function Navbar() {
       <hr />
       {count && <MenuTree data={tree} />}
     </div>
+    </Affix>
   );
 }
 

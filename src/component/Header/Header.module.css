@@ -1,6 +1,10 @@
 .headerForm {
     margin: 0;
     flex: 99;
+    background-color: #053896;
+    width: 100%;
+    height: 60px;
+    z-index: 99;
 }
 
 .logo {
