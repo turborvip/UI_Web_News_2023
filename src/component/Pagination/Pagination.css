@@ -1,0 +1,6 @@
+.page-link {
+  color: var(--background-sidebar);
+}
+.page-link:hover {
+  color: #f0a07c;
+}

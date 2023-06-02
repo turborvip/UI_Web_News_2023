@@ -1,12 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --background-sidebar: #8aaae5;
+  --color-siderbar: #ffffff;
+}
+
 .sidebar_container {
   width: 300px;
   height: 100vh;
   margin: 0 0 0 -10px;
   padding: 20px;
-  background-color: #fff;
+  background-color: var(--background-sidebar);
+  color: var(--color-siderbar);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   position: fixed;
   z-index: 999;
+  font-family: "Poppins";
 }
 
 .sidebar__inner {
@@ -26,8 +35,12 @@
 .admin__link {
   font-size: 24px;
   font-weight: 700;
-  color: #6495ed;
+  color: var(--color-siderbar);
   line-height: 46px;
+  text-decoration: none;
+}
+.admin__link:hover {
+  color: #fff;
 }
 
 .sidebar__action {

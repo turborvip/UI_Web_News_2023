@@ -13,8 +13,8 @@
   width: 100%;
   height: 200px;
   padding: 20px 10px;
-  color: #fff;
-  background-color: #b0e0e6;
+  color: var(--color-siderbar);
+  background-color: var(--background-sidebar);
 }
 
 .newsmanagement__btn--add {
@@ -22,7 +22,7 @@
   top: 140px;
   right: 60px;
   background-color: #fff;
-  color: #00bfff;
+  color: var(--background-sidebar);
   border: none;
   outline: none;
   border-radius: 10px;

@@ -15,8 +15,8 @@
   width: 100%;
   height: 200px;
   padding: 20px 10px;
-  color: #fff;
-  background-color: #b0e0e6;
+  color: var(--color-siderbar);
+  background-color: var(--background-sidebar);
 }
 
 .viewdaily {
@@ -64,9 +64,9 @@
   font-weight: 700;
   font-size: 24px;
   color: #1e90ff;
-  span {
+  /* span {
     color: #7b68ee;
-  }
+  } */
 }
 
 .newofcategory {

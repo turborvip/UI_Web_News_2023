@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Pagination.module.css";
+import "./Pagination.css";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 
@@ -40,13 +40,13 @@ function Pagination({ page, totalPage, idCategory, filter, fetch }) {
   // console.log('page', page, totalPage, createArr(page, totalPage));
 
   return (
-    <div className={styles.paginationItem}>
+    <div>
       <nav aria-label="...">
         <ul className="pagination">
           <li className="page-item ">
             <div
               onClick={() => fetch(idCategory, parseInt(page) - 1, filter)}
-              className={clsx("page-link", handleDisablePrev(page, totalPage))}
+              className="page-link"
             >
               Previous
             </div>

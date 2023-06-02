@@ -2,7 +2,7 @@ import axios from "axios";
 import notify from "./notify";
 
 const request = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
+  baseURL: "http://192.168.83.103:8080/api/v1",
   timeout: 60000,
   headers: {
     "Content-Type": "application/json",
@@ -20,9 +20,9 @@ request.interceptors.response.use(
       window.location.replace("../login");
       localStorage.clear();
     }
-    if(err.response.status === 500){
-      console.log("Aaaa",err)
-      notify("error",err?.response?.data?.userMessage)
+    if (err.response.status === 500) {
+      console.log("Aaaa", err);
+      notify("error", err?.response?.data?.userMessage);
     }
   }
 );
