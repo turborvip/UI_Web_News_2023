@@ -1,25 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap");
 .MenuTree {
-    display: flex;
-    flex-direction: row;
-    overflow-y: scroll;
-    gap: 50px;
-    flex-wrap: wrap;
-    height: 70%;
-    width: 90%;
-    margin: auto;
-    padding: 20px;
-    background-color: #141329;
-    color: azure;
+  display: flex;
+  flex-direction: row;
+  overflow-y: scroll;
+  gap: 50px;
+  flex-wrap: wrap;
+  height: 70%;
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  background-color: #300970;
+  color: azure;
+  position: sticky;
 }
 
 .nameCategory {
-    font-family: calibri;
-    font-size: larger;
-    font-weight: 600;
-    text-decoration: none;
-    color: rgb(255, 255, 255);
+  font-family: calibri;
+  font-size: larger;
+  font-weight: 600;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-family: "Roboto", sans-serif;
 }
 
 .nameCategory:hover {
-    color: white;
+  color: white;
 }

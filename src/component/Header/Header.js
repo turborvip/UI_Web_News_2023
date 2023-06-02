@@ -5,7 +5,7 @@ import Search from "antd/es/input/Search";
 import { LoginOutlined, UserAddOutlined,UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 
-const logo = "../../../image/logo/logo-nosloganblack.png";
+const logo = "../../../image/logo/logo-noslogan.png";
 const onSearch = (value) => console.log(value);
 
 function Header() {
@@ -14,7 +14,7 @@ function Header() {
   user = user ? JSON.parse(user) : undefined;
 
   return (
-    <div className={clsx(styles.headerForm, "row")}>
+    <div className={clsx(styles.headerForm, "row")} >
       <div className="col-xs-12  col-sm-5 col-md-7 col-lg-7">
         <Link to={"../"}>
           <img src={logo} alt="" className={styles.logo} />
@@ -41,13 +41,13 @@ function Header() {
         ) : (
           <>
             <UserOutlined
-              style={{ cursor: "pointer", width: "20px" }}
+              style={{ cursor: "pointer", width: "20px",color:"white"}}
               onClick={() => navigate("../login")}
             />
-            <UserAddOutlined onClick={() => navigate("../register")} />
+            <UserAddOutlined onClick={() => navigate("../register")} style={{color:"white"}}/>
           </>
         )}
-        <LoginOutlined onClick={()=>{localStorage.clear(); navigate("../")}}/>
+        <LoginOutlined onClick={()=>{localStorage.clear(); navigate("../")}} style={{color:"white"}}/>
       </div>
     </div>
   );

@@ -102,12 +102,12 @@ function InfiniteList({ state, setState, page, setPage }) {
           <img
             className={clsx("img-fluid img-thumbnail")}
             loading="lazy"
-            src="https://znews-photo.zingcdn.me/w480/Uploaded/spuoouo/2023_04_30/phuquy_zing_42.jpg"
+            src="https://icdn.dantri.com.vn/zoom/252_168/2023/05/24/screen-shot-2023-05-24-at-1-crop-1684910354301.jpeg"
             alt=""
           />
         </div>
         <div className={styles.titleAds}>
-          Sau lễ, Phú Quý vẫn kín phòng 2 ngày cuối tuần
+          Trái cây khổng lồ, độc lạ thế giới xuất hiện tại TPHCM
         </div>
       </div>
     </div>

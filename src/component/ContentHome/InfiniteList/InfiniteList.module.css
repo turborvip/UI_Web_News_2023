@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 .normalContent {
     width: 90%;
     margin: 2% auto;
@@ -9,11 +11,13 @@
     display: flex;
     align-items: center;
     color: black;
+    font-family: "Roboto", sans-serif;
 }
 
 .descriptionNormalContent {
     font-size: medium;
     color: black;
+    font-family: "Roboto", sans-serif;
 }
 
 .imgNormalContent {
