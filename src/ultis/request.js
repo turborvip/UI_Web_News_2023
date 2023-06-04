@@ -2,7 +2,7 @@ import axios from "axios";
 import notify from "./notify";
 
 const request = axios.create({
-  baseURL: "http://192.168.83.103:8080/api/v1",
+  baseURL: "http://localhost:8080/api/v1",
   timeout: 60000,
   headers: {
     "Content-Type": "application/json",

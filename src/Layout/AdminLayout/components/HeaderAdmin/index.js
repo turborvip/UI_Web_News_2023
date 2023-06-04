@@ -4,6 +4,7 @@ import "./Header.css";
 import { logout } from "../../../../ApiService";
 import { useNavigate } from "react-router";
 import Search from "antd/es/transfer/search";
+import { Avatar } from "antd";
 
 function HeaderAdmin() {
   // const navigate = useNavigate();
@@ -24,10 +25,8 @@ function HeaderAdmin() {
           <Search placeholder="Enter" enterButton />
         </div>
         <div className="headeradmin__action">
-          <div className="headeradmin__avatar">
-            <span>
-              <img src={`${userLocal?.avatar}`} alt="avatar" />
-            </span>
+          <div className="headeradmin__avatar" style={{display:"flex", alignItems:'center'}}>
+              <Avatar src={`${userLocal?.avatar}`} alt="avatar" />
           </div>
           <div className="btn_logout-admin" onClick={handleLogout}>
             <img

@@ -72,7 +72,7 @@ function ModalUpdateAccount({ modal, toggle, account, fetch, listAccount }) {
             <Input
               name="birthday"
               type="date"
-              defaultValue={account?.birthday}
+              defaultValue={moment(account?.birthday).format('yyyy-mm-DD')}
               onChange={(e) => setBirthday(e.target.value)}
             />
           </Col>
